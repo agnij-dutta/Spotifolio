@@ -42,9 +42,18 @@ export default function Home() {
   const [history, setHistory] = useState([DEFAULT_SECTION])
   const [historyIndex, setHistoryIndex] = useState(0)
   const [activeSection, setActiveSectionState] = useState(DEFAULT_SECTION)
-  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(true)
+  const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false)
   const [leftSidebarWidth, setLeftSidebarWidth] = useState(240)
   const [rightSidebarWidth, setRightSidebarWidth] = useState(384)
+
+  // Automatically open/close right sidebar based on active section
+  useEffect(() => {
+    if (activeSection === "Home") {
+      setIsRightSidebarOpen(false)
+    } else {
+      setIsRightSidebarOpen(true)
+    }
+  }, [activeSection])
 
   // Custom setActiveSection that manages history
   const setActiveSection = (section: string) => {
