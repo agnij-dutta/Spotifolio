@@ -8,7 +8,7 @@ import { RightSidebar } from "../components/RightSidebar"
 import { TopBar } from "../components/TopBar"
 import { useSearchParams } from "next/navigation"
 
-const DEFAULT_SECTION = "Education"
+const DEFAULT_SECTION = "Home"
 
 // Component that handles Spotify token processing
 function SpotifyTokenHandler() {
@@ -92,7 +92,10 @@ export default function Home() {
           width={leftSidebarWidth}
           setWidth={setLeftSidebarWidth}
         />
-        <div className={`flex-1 flex flex-col transition-all duration-300`} style={{ marginRight: isRightSidebarOpen ? rightSidebarWidth + 8 : 0 }}>
+        <div
+          className="flex-1 min-w-0 flex flex-col transition-all duration-300"
+          style={{ marginRight: isRightSidebarOpen ? rightSidebarWidth + 8 : 0 }}
+        >
           <MainContent activeSection={activeSection} setActiveSection={setActiveSection} onOpenRightSidebar={openRightSidebar} />
         </div>
         <RightSidebar 
