@@ -147,7 +147,7 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
                         } else if (isDownload) {
                           generateResume()
                         } else if (item.name === "Home") {
-                          setActiveSection("Education")
+                          setActiveSection("Home")
                           if (mobileMenuOpen) setMobileMenuOpen(false)
                         }
                       }}
