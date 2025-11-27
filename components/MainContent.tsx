@@ -194,7 +194,7 @@ type PortfolioSection = keyof typeof portfolioData
 type SectionTarget = PortfolioSection | "Home"
 
 const homeHero = {
-  cover: "/profile.jpg",
+  cover: "/WhatsApp Image 2025-11-28 at 01.48.04.jpeg",
   label: "Portfolio Album",
   title: "Agnij Dutta",
   tagline: "Full-stack developer and data scientist crafting human-centered tooling for Workwise, HackQuest, and the BS Data Science program at IIT Madras.",
