@@ -703,9 +703,6 @@ function HomeShowcase({ setActiveSection }: { setActiveSection: (section: Sectio
                   priority
                 />
               </div>
-              <div className="absolute -bottom-4 left-8 bg-green-500 text-black px-4 py-2 rounded-full text-sm font-semibold shadow-lg z-10">
-                Now streaming
-              </div>
             </div>
             <div className="flex-1 min-w-0">
               <p className="flex items-center gap-2 text-sm uppercase tracking-[0.35em] text-green-300">
