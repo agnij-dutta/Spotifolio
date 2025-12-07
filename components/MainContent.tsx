@@ -3,8 +3,16 @@
 import { Play, Download, Shuffle, ArrowUpRight, Sparkles } from "lucide-react"
 import Image from "next/image"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { generateResume } from "../utils/resumeGenerator"
 import { useEffect, useState } from "react"
+
+const downloadResume = () => {
+  const link = document.createElement('a')
+  link.href = 'https://drive.google.com/uc?export=download&id=1ATfZjD1YXQlBkNpUVVPtonMGkCvjYo-A'
+  link.download = 'Agnij_Dutta_SoftwareDeveloper-2.pdf'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 import { fetchGitHubProjects, CategorizedProject } from "@/lib/github"
 import { Loading, LoadingRow, LoadingCard } from "@/components/ui/loading"
 
@@ -550,13 +558,14 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
             <Shuffle size={28} />
           </button>
           {/* Download Button */}
-          <button
-            onClick={generateResume}
+          <a
+            href="https://drive.google.com/uc?export=download&id=1ATfZjD1YXQlBkNpUVVPtonMGkCvjYo-A"
+            download="Agnij_Dutta_SoftwareDeveloper-2.pdf"
             className="w-12 h-12 flex items-center justify-center rounded-full bg-[#232323] hover:bg-[#333] transition-colors text-white"
             title="Download Resume (PDF)"
           >
             <Download size={28} />
-          </button>
+          </a>
         </div>
       </div>
       {/* Table content in bottom section */}
@@ -728,7 +737,7 @@ function HomeShowcase({ setActiveSection }: { setActiveSection: (section: Sectio
                   Play my story
                 </button>
                 <button
-                  onClick={generateResume}
+                  onClick={downloadResume}
                   className="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-3 rounded-full font-semibold text-white hover:bg-white/20 transition-colors"
                 >
                   <Download size={18} />

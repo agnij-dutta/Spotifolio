@@ -90,6 +90,55 @@ export default function Home() {
 
   return (
     <div className="flex flex-col h-screen bg-black">
+      <section className="sr-only" aria-label="Portfolio introduction">
+        <h1>
+          Agnij Dutta | Full-stack Developer, Blockchain Engineer, and IIT Madras Data Science Student
+        </h1>
+        <p>
+          Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. 
+          Currently pursuing a Bachelor's degree in Data Science and Applications at the 
+          Indian Institute of Technology Madras (IIT Madras). Building human-centered software 
+          solutions at Workwise as an SDE Intern and contributing to community growth at 
+          HackQuest as a Developer Advocate. Specializes in React, Next.js, TypeScript, 
+          blockchain protocols, smart contracts, machine learning, and data science.
+        </p>
+        <h2>Professional Experience</h2>
+        <ul>
+          <li>SDE Intern at Workwise - Built features to boost admin productivity by 85%</li>
+          <li>Developer Advocate at HackQuest - Community growth and maintenance</li>
+          <li>Data Science Intern at Project Control & Systems - Increased customer retention by 20%</li>
+        </ul>
+        <h2>Education</h2>
+        <p>
+          Bachelor of Science in Data Science and Applications at Indian Institute of Technology Madras, 
+          expected graduation 2028. Major in Data Science, Minor in Machine Learning.
+        </p>
+        <h2>Technical Skills</h2>
+        <ul>
+          <li>Frontend: React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS</li>
+          <li>Backend: Node.js, Express, REST APIs, GraphQL</li>
+          <li>Blockchain: Solidity, Smart Contracts, Web3, Ethereum, Rust, Move</li>
+          <li>Data Science & ML: Python, TensorFlow, PyTorch, OpenCV, R, Data Analysis</li>
+          <li>Tools: Git, GitHub, Docker, Linux, VS Code</li>
+        </ul>
+        <h2>Projects</h2>
+        <p>
+          Explore AI projects, web applications, and blockchain solutions. Portfolio includes 
+          machine learning models, full-stack web applications, and decentralized applications 
+          built with modern technologies.
+        </p>
+        <nav aria-label="Portfolio sections">
+          <ul>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#work-experience">Work Experience</a></li>
+            <li><a href="#ai-projects">AI Projects</a></li>
+            <li><a href="#web-projects">Web Projects</a></li>
+            <li><a href="#blockchain-projects">Blockchain Projects</a></li>
+            <li><a href="#skills">Skills & Tools</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </section>
       <Suspense fallback={null}>
         <SpotifyTokenHandler />
       </Suspense>
