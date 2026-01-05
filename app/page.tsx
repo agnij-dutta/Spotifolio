@@ -92,7 +92,7 @@ export default function Home() {
     <div className="flex flex-col h-screen bg-black">
       <section className="sr-only" aria-label="Portfolio introduction">
         <h1>
-          Agnij Dutta | Full-stack Developer, Blockchain Engineer, and IIT Madras Data Science Student
+          Agnij Dutta | Full-stack Developer & Blockchain Engineer
         </h1>
         <p>
           Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. 

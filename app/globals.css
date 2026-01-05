@@ -10,6 +10,10 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+  
+  .dynamic-margin-right {
+    margin-right: var(--dynamic-margin, 0);
+  }
 }
 
 @layer base {

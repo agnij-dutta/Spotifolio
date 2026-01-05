@@ -141,7 +141,7 @@ export function RightSidebar({ isOpen, onClose, setActiveSection, width, setWidt
                 className="w-16 h-16 rounded-full border-4 border-black shadow-lg object-cover mr-4"
               />
               <div>
-                <h1 className="text-3xl font-bold leading-tight underline hover:text-green-400 transition-colors">{aboutData.name}</h1>
+                <h2 className="text-3xl font-bold leading-tight underline hover:text-green-400 transition-colors">{aboutData.name}</h2>
                 <p className="text-sm text-gray-400 mt-1">{aboutData.tagline}</p>
               </div>
             </div>
@@ -162,7 +162,7 @@ export function RightSidebar({ isOpen, onClose, setActiveSection, width, setWidt
                   alt="Profile"
                   className="w-24 h-24 rounded-full border-4 border-black shadow-lg object-cover mb-4"
                 />
-                <h1 className="text-2xl font-bold mb-1 text-center">{aboutData.name}</h1>
+                <h2 className="text-2xl font-bold mb-1 text-center">{aboutData.name}</h2>
                 <p className="text-base text-gray-400 mb-6 text-center">{aboutData.tagline}</p>
                 {/* Fake stats */}
                 <div className="flex flex-col gap-4 w-full">

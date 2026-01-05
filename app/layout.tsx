@@ -16,11 +16,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Agnij Dutta | Full-stack Developer & Blockchain Engineer | IIT Madras",
+    default: "Agnij Dutta | Full-stack Developer & Blockchain Engineer",
     template: "%s | Agnij Dutta",
   },
   description:
-    "Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. Currently studying Data Science at IIT Madras. Building human-centered software at Workwise and HackQuest. Specializes in React, Next.js, TypeScript, blockchain protocols, and machine learning.",
+    "Full-stack developer & blockchain engineer from Kolkata. Building at Workwise & HackQuest. IIT Madras Data Science student. React, Next.js, TypeScript.",
   keywords: [
     "Agnij Dutta",
     "Agnij Dutta portfolio",
@@ -193,6 +193,31 @@ const structuredData = {
   ],
 }
 
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${siteUrl}#business`,
+  name: "Agnij Dutta - Software Development Services",
+  description: "Full-stack development and blockchain engineering services",
+  url: siteUrl,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Kolkata",
+    addressRegion: "West Bengal",
+    addressCountry: "IN",
+  },
+  areaServed: {
+    "@type": "Country",
+    name: "India",
+  },
+  knowsAbout: [
+    "Web Development",
+    "Blockchain Development",
+    "Full-stack Development",
+    "Software Engineering",
+  ],
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -206,6 +231,29 @@ export default function RootLayout({
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <script
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
+        />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+                `,
+              }}
+            />
+          </>
+        )}
       </head>
       <body className="bg-black text-white">{children}</body>
     </html>

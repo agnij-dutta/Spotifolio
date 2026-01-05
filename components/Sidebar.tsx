@@ -104,7 +104,7 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
         {/* Header */}
         <div className={`p-6 ${collapsed ? "px-2 py-4" : ""}`}>
           <div className="flex items-center justify-between mb-6">
-            {!collapsed && <h1 className="text-2xl font-bold text-white">Portfolio</h1>}
+            {!collapsed && <h2 className="text-2xl font-bold text-white">Portfolio</h2>}
             <button 
               onClick={toggleCollapsed} 
               className={`p-1 hover:bg-[#1F1F1F] rounded-full transition-colors ${collapsed ? "flex justify-center w-full" : ""}`}

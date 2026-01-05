@@ -1,0 +1,29 @@
+# llms.txt for agnij.dev
+
+# About
+Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. Currently studying Data Science at IIT Madras. Building human-centered software at Workwise and HackQuest.
+
+# Contact
+- Email: agnijdutta413@gmail.com
+- GitHub: https://github.com/agnij-dutta
+- LinkedIn: https://linkedin.com/in/agnij-dutta
+- Twitter/X: https://x.com/0xholmesdev
+
+# Skills
+- Frontend: React, Next.js, TypeScript, JavaScript
+- Backend: Node.js, Express, REST APIs
+- Blockchain: Solidity, Smart Contracts, Web3, Ethereum
+- Data Science: Python, TensorFlow, PyTorch, Machine Learning
+- Tools: Git, Docker, AWS
+
+# Experience
+- SDE Intern at Workwise (2025-present)
+- Developer Advocate at HackQuest (2024-present)
+- Data Science Intern at Project Control & Systems (2023-2024)
+
+# Education
+- BS Data Science and Applications at IIT Madras (Expected 2028)
+
+# Website
+https://agnij.dev
+
