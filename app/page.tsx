@@ -97,35 +97,35 @@ export default function Home() {
         <p>
           Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. 
           Currently pursuing a Bachelor's degree in Data Science and Applications at the 
-          Indian Institute of Technology Madras (IIT Madras). Building human-centered software 
-          solutions at Workwise as an SDE Intern and contributing to community growth at 
-          HackQuest as a Developer Advocate. Specializes in React, Next.js, TypeScript, 
-          blockchain protocols, smart contracts, machine learning, and data science.
+          <a href="https://www.iitm.ac.in" rel="noopener noreferrer" target="_blank"> Indian Institute of Technology Madras</a> (IIT Madras). Building human-centered software 
+          solutions at <a href="https://workwise.io" rel="noopener noreferrer" target="_blank">Workwise</a> as an SDE Intern and contributing to community growth at 
+          <a href="https://hackquest.io" rel="noopener noreferrer" target="_blank"> HackQuest</a> as a Developer Advocate. Specializes in <a href="https://react.dev" rel="noopener noreferrer" target="_blank">React</a>, <a href="https://nextjs.org" rel="noopener noreferrer" target="_blank">Next.js</a>, <a href="https://www.typescriptlang.org" rel="noopener noreferrer" target="_blank">TypeScript</a>, 
+          blockchain protocols, smart contracts, machine learning, and data science. Connect on <a href="https://linkedin.com/in/agnij-dutta" rel="noopener noreferrer" target="_blank">LinkedIn</a> or <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>.
         </p>
         <h2>Professional Experience</h2>
         <ul>
-          <li>SDE Intern at Workwise - Built features to boost admin productivity by 85%</li>
-          <li>Developer Advocate at HackQuest - Community growth and maintenance</li>
+          <li><a href="https://workwise.io" rel="noopener noreferrer" target="_blank">SDE Intern at Workwise</a> - Built features to boost admin productivity by 85%</li>
+          <li><a href="https://hackquest.io" rel="noopener noreferrer" target="_blank">Developer Advocate at HackQuest</a> - Community growth and maintenance</li>
           <li>Data Science Intern at Project Control & Systems - Increased customer retention by 20%</li>
         </ul>
         <h2>Education</h2>
         <p>
-          Bachelor of Science in Data Science and Applications at Indian Institute of Technology Madras, 
-          expected graduation 2028. Major in Data Science, Minor in Machine Learning.
+          Bachelor of Science in Data Science and Applications at <a href="https://www.iitm.ac.in" rel="noopener noreferrer" target="_blank">Indian Institute of Technology Madras</a>, 
+          expected graduation 2028. Major in <a href="https://www.iitm.ac.in/ds" rel="noopener noreferrer" target="_blank">Data Science</a>, Minor in <a href="https://www.iitm.ac.in/ml" rel="noopener noreferrer" target="_blank">Machine Learning</a>.
         </p>
         <h2>Technical Skills</h2>
         <ul>
-          <li>Frontend: React, Next.js, TypeScript, JavaScript, HTML, CSS, Tailwind CSS</li>
-          <li>Backend: Node.js, Express, REST APIs, GraphQL</li>
-          <li>Blockchain: Solidity, Smart Contracts, Web3, Ethereum, Rust, Move</li>
-          <li>Data Science & ML: Python, TensorFlow, PyTorch, OpenCV, R, Data Analysis</li>
-          <li>Tools: Git, GitHub, Docker, Linux, VS Code</li>
+          <li>Frontend: <a href="https://react.dev" rel="noopener noreferrer" target="_blank">React</a>, <a href="https://nextjs.org" rel="noopener noreferrer" target="_blank">Next.js</a>, <a href="https://www.typescriptlang.org" rel="noopener noreferrer" target="_blank">TypeScript</a>, JavaScript, HTML, CSS, Tailwind CSS</li>
+          <li>Backend: <a href="https://nodejs.org" rel="noopener noreferrer" target="_blank">Node.js</a>, Express, REST APIs, GraphQL</li>
+          <li>Blockchain: <a href="https://soliditylang.org" rel="noopener noreferrer" target="_blank">Solidity</a>, Smart Contracts, <a href="https://web3js.org" rel="noopener noreferrer" target="_blank">Web3</a>, <a href="https://ethereum.org" rel="noopener noreferrer" target="_blank">Ethereum</a>, Rust, Move</li>
+          <li>Data Science & ML: <a href="https://www.python.org" rel="noopener noreferrer" target="_blank">Python</a>, <a href="https://www.tensorflow.org" rel="noopener noreferrer" target="_blank">TensorFlow</a>, <a href="https://pytorch.org" rel="noopener noreferrer" target="_blank">PyTorch</a>, OpenCV, R, Data Analysis</li>
+          <li>Tools: <a href="https://git-scm.com" rel="noopener noreferrer" target="_blank">Git</a>, <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>, <a href="https://www.docker.com" rel="noopener noreferrer" target="_blank">Docker</a>, Linux, VS Code</li>
         </ul>
         <h2>Projects</h2>
         <p>
-          Explore AI projects, web applications, and blockchain solutions. Portfolio includes 
+          Explore <a href="#ai-projects">AI projects</a>, <a href="#web-projects">web applications</a>, and <a href="#blockchain-projects">blockchain solutions</a>. Portfolio includes 
           machine learning models, full-stack web applications, and decentralized applications 
-          built with modern technologies.
+          built with modern technologies. View projects on <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>.
         </p>
         <nav aria-label="Portfolio sections">
           <ul>

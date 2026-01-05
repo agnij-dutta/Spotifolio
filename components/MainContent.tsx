@@ -534,7 +534,7 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
         {/* Section Header */}
         <div className="mb-8">
           <p className="text-sm font-semibold">PORTFOLIO</p>
-          <h1 className="text-4xl md:text-6xl font-bold mt-2 mb-4">{currentData.title}</h1>
+          <h2 className="text-4xl md:text-6xl font-bold mt-2 mb-4">{currentData.title}</h2>
           <p className="text-base text-gray-300">{currentData.description}</p>
         </div>
 
@@ -717,7 +717,7 @@ function HomeShowcase({ setActiveSection }: { setActiveSection: (section: Sectio
               <p className="flex items-center gap-2 text-sm uppercase tracking-[0.35em] text-green-300">
                 <Sparkles size={16} /> {homeHero.label}
               </p>
-              <h1 className="text-4xl md:text-6xl font-bold mt-4">{homeHero.title}</h1>
+              <h2 className="text-4xl md:text-6xl font-bold mt-4">{homeHero.title}</h2>
               <p className="mt-4 text-base md:text-lg text-gray-100 max-w-3xl">{homeHero.tagline}</p>
               <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {homeHero.stats.map((stat) => (
