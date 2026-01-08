@@ -162,7 +162,7 @@ const structuredData = {
     name: "Indian Institute of Technology Madras",
     department: {
       "@type": "Organization",
-      name: "Data Science and Applications",
+      name: "Data Science and AI Applications",
     },
   },
   knowsAbout: [
@@ -188,7 +188,7 @@ const structuredData = {
       "@type": "EducationalOccupationalCredential",
       credentialCategory: "degree",
       educationalLevel: "Bachelor's Degree",
-      about: "Data Science and Applications",
+      about: "Data Science and AI Applications",
     },
   ],
 }

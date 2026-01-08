@@ -22,8 +22,9 @@ Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, Indi
 - Data Science Intern at Project Control & Systems (2023-2024)
 
 # Education
-- BS Data Science and Applications at IIT Madras (Expected 2028)
+- Bachelor's Data Science and AI Applications at IIT Madras
 
 # Website
 https://agnij.dev
+
 

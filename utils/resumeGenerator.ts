@@ -46,10 +46,8 @@ export const generateResume = () => {
   doc.setFont("helvetica", "bold")
   doc.text("Indian Institute of Technology, Madras", 20, 130)
   doc.setFont("helvetica", "normal")
-  doc.text("BS Data Science and Applications", 20, 138)
+  doc.text("Bachelor's Data Science and AI Applications", 20, 138)
   doc.text("Major: Data Science | Minor: Machine Learning", 20, 146)
-  doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2])
-  doc.text("Expected 2028", 150, 130)
   doc.setTextColor(0, 0, 0)
 
   // Experience Section

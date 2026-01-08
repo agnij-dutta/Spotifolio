@@ -24,10 +24,10 @@ const portfolioData = {
     gradient: "from-blue-900 to-black",
     items: [
       {
-        title: "BS Data Science and Applications",
+        title: "Bachelor's Data Science and AI Applications",
         type: "Major: Data Science | Minor: Machine Learning",
         company: "Indian Institute of Technology, Madras",
-        duration: "2028",
+        duration: "",
         icon: "/iit-madras-logo.svg",
       },
     ],
@@ -205,11 +205,11 @@ const homeHero = {
   cover: "/WhatsApp Image 2025-11-28 at 01.48.04.jpeg",
   label: "Portfolio Album",
   title: "Agnij Dutta",
-  tagline: "Full-stack developer and data scientist crafting human-centered tooling for Workwise, HackQuest, and the BS Data Science program at IIT Madras.",
+  tagline: "Full-stack developer and data scientist crafting human-centered tooling for Workwise, HackQuest, and the Bachelor's Data Science and AI Applications program at IIT Madras.",
   stats: [
     { value: "85% ↑", label: "Admin efficiency", hint: "Workwise command center" },
     { value: "20% ↑", label: "Customer retention", hint: "Project Control & Systems" },
-    { value: "2028", label: "BS Data Science", hint: "IIT Madras · ML minor" },
+    { value: "", label: "Bachelor's Data Science", hint: "IIT Madras · ML minor" },
   ],
 }
 
@@ -222,8 +222,8 @@ const homeQuickFilters: { title: string; detail: string; meta: string; target: P
   },
   {
     title: "Education",
-    detail: "BS Data Science & Applications · IIT Madras",
-    meta: "2028 cohort",
+    detail: "Bachelor's Data Science & AI Applications · IIT Madras",
+    meta: "",
     target: "Education",
   },
   {
@@ -294,7 +294,7 @@ const homeShelves: HomeShelf[] = [
     cards: [
       {
         title: "Data Science Studio",
-        description: "BS Data Science & Applications curriculum at IIT Madras with a focus on product analytics.",
+        description: "Bachelor's Data Science & AI Applications curriculum at IIT Madras with a focus on product analytics.",
         badge: "IIT Madras · Core Track",
         meta: "Statistics · Data pipelines",
         image: "/iit-madras-logo.svg",
@@ -383,18 +383,18 @@ const homeTimeline: { year: string; title: string; description: string; badge?: 
     target: "Work Experience",
   },
   {
-    year: "2028",
-    title: "BS Data Science & Applications",
+    year: "",
+    title: "Bachelor's Data Science & AI Applications",
     description: "Major in Data Science, ML minor at IIT Madras.",
     target: "Education",
   },
 ]
 
 const homeNowPlaying = {
-  title: "Data Science & Applications",
-  description: "Undergraduate journey at IIT Madras blending statistics, ML, and product thinking with a 2028 graduation target.",
+  title: "Data Science & AI Applications",
+  description: "Undergraduate journey at IIT Madras blending statistics, ML, and product thinking.",
   bullets: [
-    "Major: Data Science & Applications",
+    "Major: Data Science & AI Applications",
     "Minor: Machine Learning",
     "Studios: Computer Vision, Causal ML, Product Analytics",
   ],

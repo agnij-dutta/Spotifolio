@@ -29,9 +29,9 @@ export function RightSidebar({ isOpen, onClose, setActiveSection, width, setWidt
     fullBio: `Hi, I'm Agnij, a passionate software engineer currently pursuing my Bachelor's in Data Science at IIT Madras. I love building at the intersection of AI, Web3, and software engineering—bringing together smart systems, scalable backends, and intuitive frontends. Whether it's crafting seamless UIs with React and Next.js, developing intelligent solutions with machine learning and NLP, or building smart contracts and decentralized apps on Ethereum and Solana, I'm always exploring new ways to turn ideas into impactful products. Beyond code, I’m a part-time poet who believes that creativity and logic can—and should—coexist. I'm constantly learning, deeply curious, and always open to opportunities where I can grow, collaborate, and build something meaningful.
 `,
     education: {
-      title: "BS Data Science and Applications",
+      title: "Bachelor's Data Science and AI Applications",
       institute: "Indian Institute of Technology, Madras",
-      year: "Expected 2028",
+      year: "",
       major: "Data Science | Machine Learning"
     },
     workExperiences: [
