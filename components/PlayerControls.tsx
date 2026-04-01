@@ -69,7 +69,7 @@ export function PlayerControls({ onToggleRightSidebar, isRightSidebarOpen }: Pla
   }
 
   return (
-    <div className="bg-black text-white p-3 md:p-4 flex flex-col md:flex-row md:items-center md:justify-between">
+    <div data-tour="player-bar" className="bg-black text-white p-3 md:p-4 flex flex-col md:flex-row md:items-center md:justify-between">
       {/* Now playing info */}
       <div className="flex items-center space-x-4 mb-3 md:mb-0">
         {playbackState?.item ? (
@@ -145,12 +145,15 @@ export function PlayerControls({ onToggleRightSidebar, isRightSidebarOpen }: Pla
             <Repeat size={18} />
           </button>
         </div>
-        <div className="w-full max-w-md mt-2">
-          <div className="bg-gray-500 rounded-full h-1 w-full">
-            <div 
-              className="bg-white rounded-full h-1 transition-all duration-300"
+        <div className="w-full max-w-md mt-2 group/progress">
+          <div className="bg-[#4d4d4d] rounded-full h-1 w-full relative cursor-pointer">
+            <div
+              className="bg-white group-hover/progress:bg-[#1DB954] rounded-full h-1 transition-all duration-300 relative"
               style={{ width: `${getProgressPercentage()}%` }}
-            ></div>
+            >
+              {/* Dot handle on hover */}
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white opacity-0 group-hover/progress:opacity-100 transition-opacity" />
+            </div>
           </div>
           {playbackState?.item && (
             <div className="flex justify-between text-xs text-gray-400 mt-1">
@@ -162,7 +165,7 @@ export function PlayerControls({ onToggleRightSidebar, isRightSidebarOpen }: Pla
       </div>
 
       {/* Volume control and right sidebar toggle */}
-      <div className="hidden md:flex items-center space-x-4">
+      <div className="hidden md:flex items-center space-x-4 group/vol">
         <Volume2 size={18} className="text-gray-400 hover:text-white" />
         <input
           type="range"
@@ -172,7 +175,7 @@ export function PlayerControls({ onToggleRightSidebar, isRightSidebarOpen }: Pla
           onChange={(e) => handleVolumeChange(parseInt(e.target.value))}
           className="w-24 h-1 bg-gray-500 rounded-lg appearance-none cursor-pointer slider"
           style={{
-            background: `linear-gradient(to right, white 0%, white ${volume}%, #6b7280 ${volume}%, #6b7280 100%)`
+            background: `linear-gradient(to right, #1DB954 0%, #1DB954 ${volume}%, #4d4d4d ${volume}%, #4d4d4d 100%)`
           }}
         />
         <button

@@ -1,16 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { Home, Search, Library, PlusSquare, Heart, Download, Menu, X } from "lucide-react"
-import { 
-  FaCode, 
-  FaGraduationCap, 
-  FaBriefcase, 
-  FaBrain, 
-  FaGlobe, 
-  FaEthereum, 
-  FaTools, 
-  FaGithub 
+import { Home, Search, Library, PlusSquare, Heart, Download, Menu, X, Trophy } from "lucide-react"
+import {
+  FaCode,
+  FaGraduationCap,
+  FaBriefcase,
+  FaBrain,
+  FaGlobe,
+  FaEthereum,
+  FaTools,
+  FaGithub
 } from "react-icons/fa"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { generateResume } from "../utils/resumeGenerator"
@@ -44,13 +44,15 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
     setCollapsed((prev) => !prev)
   }
 
+  // Navigation sections - now functional
   const navSections = [
-    { name: "Home", icon: Home },
-    { name: "Your Library", icon: Library },
+    { name: "Home", icon: Home, isNav: true },
+    { name: "Your Library", icon: Library, isNav: true, gradient: "from-[#1DB954] to-green-600" },
   ]
+
+  // Action sections - now functional achievements
   const actionSections = [
-    { name: "Create Playlist", icon: PlusSquare },
-    { name: "Liked Songs", icon: Heart },
+    { name: "Achievements", icon: Trophy, isNav: true, gradient: "from-amber-500 to-orange-600" },
   ]
 
   const sidebarItems = [
@@ -80,33 +82,33 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
         style={{ width: collapsed ? 64 : width }}
       >
         {/* Resize handle */}
-        <div 
+        <div
           className="absolute right-0 top-0 w-1 h-full cursor-col-resize hover:bg-white/20 transition-colors"
           onMouseDown={(e) => {
             e.preventDefault()
             const startX = e.clientX
             const startWidth = width
-            
+
             const handleMouseMove = (e: MouseEvent) => {
               const newWidth = Math.max(200, Math.min(400, startWidth + (e.clientX - startX)))
               setWidth(newWidth)
             }
-            
+
             const handleMouseUp = () => {
               document.removeEventListener('mousemove', handleMouseMove)
               document.removeEventListener('mouseup', handleMouseUp)
             }
-            
+
             document.addEventListener('mousemove', handleMouseMove)
             document.addEventListener('mouseup', handleMouseUp)
           }}
         />
         {/* Header */}
-        <div className={`p-6 ${collapsed ? "px-2 py-4" : ""}`}>
+        <div data-tour="sidebar" className={`p-6 ${collapsed ? "px-2 py-4" : ""}`}>
           <div className="flex items-center justify-between mb-6">
             {!collapsed && <h2 className="text-2xl font-bold text-white">Portfolio</h2>}
-            <button 
-              onClick={toggleCollapsed} 
+            <button
+              onClick={toggleCollapsed}
               className={`p-1 hover:bg-[#1F1F1F] rounded-full transition-colors ${collapsed ? "flex justify-center w-full" : ""}`}
             >
               <span className={`${collapsed ? "w-7 flex-shrink-0 flex items-center justify-center" : ""}`}>
@@ -114,10 +116,10 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
               </span>
             </button>
           </div>
-  
+
           {/* Primary nav */}
           <ScrollArea className="flex-1">
-            <ul className={`flex flex-col gap-1 ${collapsed ? "items-center" : ""}`}> 
+            <ul className={`flex flex-col gap-1 ${collapsed ? "items-center" : ""}`}>
               {sidebarItems.map((item, idx) => {
                 if ('type' in item && item.type === 'label') {
                   return !collapsed ? (
@@ -127,42 +129,49 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
                   ) : null
                 }
                 const isPortfolio = 'isPortfolio' in item && item.isPortfolio
+                const isNav = 'isNav' in item && item.isNav
                 const Icon = 'icon' in item ? item.icon : undefined
                 const isActive = activeSection === item.name
                 const isContact = item.name === "Contact"
                 const isDownload = 'type' in item && item.type === 'download'
+                const hasGradient = 'gradient' in item && item.gradient
+
                 const baseClasses = `w-full flex items-center gap-x-4 px-3 py-2 rounded-lg transition-all font-medium text-left justify-start`;
                 const collapsedClasses = collapsed ? "justify-center px-2" : ""
-                const activeGradient = isPortfolio ? `bg-gradient-to-r ${'gradient' in item ? item.gradient : ''} text-white shadow-md` : "bg-[#1F1F1F] text-white"
-                const inactiveGradient = isPortfolio ? "text-white/80 hover:bg-[#1F1F1F]" : "text-white/80 hover:bg-[#1F1F1F]"
-                const contactClasses = isActive ? "bg-teal-500 text-white" : "text-teal-500 hover:bg-[#1F1F1F]"
-                const downloadClasses = isDownload ? "hover:bg-[#1F1F1F] text-white/80" : ""
+
+                // Determine active/inactive styles
+                let stateClasses = ""
+                if (isDownload) {
+                  stateClasses = "hover:bg-[#1F1F1F] text-white/80"
+                } else if (isContact) {
+                  stateClasses = isActive ? "bg-teal-500 text-white" : "text-teal-500 hover:bg-[#1F1F1F]"
+                } else if (isActive && hasGradient) {
+                  stateClasses = `bg-gradient-to-r ${item.gradient} text-white shadow-md`
+                } else if (isActive) {
+                  stateClasses = "bg-[#1F1F1F] text-white"
+                } else {
+                  stateClasses = "text-white/80 hover:bg-[#1F1F1F] hover:text-white"
+                }
+
+                // Add divider before Achievements section
+                const showDivider = item.name === "Achievements" && !collapsed
+
                 return (
                   <li key={item.name} className={collapsed ? "flex justify-center" : ""}>
+                    {showDivider && (
+                      <div className="border-t border-white/10 my-2 mx-2" />
+                    )}
                     <button
+                      data-tour={item.name === 'Your Library' ? 'sidebar-library' : item.name === 'Achievements' ? 'sidebar-achievements' : undefined}
                       onClick={() => {
-                        if (isPortfolio) {
+                        if (isPortfolio || isNav) {
                           setActiveSection(item.name)
                           if (mobileMenuOpen) setMobileMenuOpen(false)
                         } else if (isDownload) {
                           generateResume()
-                        } else if (item.name === "Home") {
-                          setActiveSection("Home")
-                          if (mobileMenuOpen) setMobileMenuOpen(false)
                         }
                       }}
-                      className={
-                        `${baseClasses} ` +
-                        (isDownload
-                          ? downloadClasses
-                          : isContact
-                          ? contactClasses
-                          : isActive
-                          ? activeGradient
-                          : inactiveGradient
-                        ) +
-                        ` ${collapsedClasses}`
-                      }
+                      className={`${baseClasses} ${stateClasses} ${collapsedClasses}`}
                       style={{ minHeight: 44, width: '100%', justifyContent: collapsed ? 'center' : 'flex-start' }}
                     >
                       {Icon && (
@@ -180,7 +189,7 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
               </ul>
           </ScrollArea>
         </div>
-  
+
         {/* Mobile overlay */}
         {mobileMenuOpen && (
           <div
@@ -191,5 +200,5 @@ export function Sidebar({ activeSection, setActiveSection, width, setWidth }: Si
       </div>
     </>
   )
-  
+
 }

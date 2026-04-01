@@ -27,6 +27,10 @@ export interface CategorizedProject {
   stars: number
   forks: number
   language: string
+  homepage: string | null
+  screenshotUrl: string | null
+  updatedAt: string
+  topics: string[]
 }
 
 // GitHub username - you can change this to your username
@@ -353,6 +357,14 @@ function categorizeProject(repo: GitHubRepo, readmeContent: string = ''): ('AI P
   return categories
 }
 
+// Generate a screenshot image URL using Microlink (free tier, returns direct PNG)
+export function getScreenshotImageUrl(homepageUrl: string | null): string | null {
+  if (!homepageUrl) return null
+  let url = homepageUrl.trim()
+  if (!url.startsWith('http')) url = `https://${url}`
+  return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`
+}
+
 function getProjectIcon(language: string | null, topics: string[]): string {
   if (language && LANGUAGE_ICONS[language]) {
     return LANGUAGE_ICONS[language]
@@ -429,9 +441,9 @@ export async function fetchGitHubProjects(): Promise<{
 
     const repos: GitHubRepo[] = await response.json()
 
-    // Filter out private, archived repositories, and projects with 0 stars (include forks)
-    const publicRepos = repos.filter(repo => 
-      !repo.private && !repo.archived && repo.stargazers_count > 0
+    // Filter out private and archived repositories
+    const publicRepos = repos.filter(repo =>
+      !repo.private && !repo.archived
     )
 
     const categorized: {
@@ -478,10 +490,14 @@ export async function fetchGitHubProjects(): Promise<{
         duration: new Date(repo.created_at).getFullYear().toString(),
         icon: getProjectIcon(repo.language, repo.topics),
         url: repo.html_url,
-        description: repo.description || 'No description available',
+        description: repo.description || `${repo.language || 'Project'} ${repo.topics.length > 0 ? '· ' + repo.topics.slice(0, 3).join(', ') : ''}`.trim(),
         stars: repo.stargazers_count,
         forks: repo.forks_count,
-        language: repo.language || 'Unknown'
+        language: repo.language || 'Unknown',
+        homepage: repo.homepage || null,
+        screenshotUrl: getScreenshotImageUrl(repo.homepage),
+        updatedAt: repo.pushed_at || repo.updated_at,
+        topics: repo.topics || [],
       }
       
       // Add project to all applicable categories

@@ -6,7 +6,9 @@ import { MainContent } from "../components/MainContent"
 import { PlayerControls } from "../components/PlayerControls"
 import { RightSidebar } from "../components/RightSidebar"
 import { TopBar } from "../components/TopBar"
+import { PortalTour } from "../components/PortalTour"
 import { useSearchParams } from "next/navigation"
+import type { CategorizedProject } from "@/lib/github"
 
 const DEFAULT_SECTION = "Home"
 
@@ -45,10 +47,14 @@ export default function Home() {
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false)
   const [leftSidebarWidth, setLeftSidebarWidth] = useState(240)
   const [rightSidebarWidth, setRightSidebarWidth] = useState(384)
+  const [selectedProject, setSelectedProject] = useState<CategorizedProject | null>(null)
 
   // Automatically open/close right sidebar based on active section
+  // Don't auto-close if a project is selected (user clicked a project)
   useEffect(() => {
-    if (activeSection === "Home") {
+    if (selectedProject) return // keep sidebar open when viewing a project
+    const fullPageSections = ["Home", "Your Library", "Achievements"]
+    if (fullPageSections.includes(activeSection)) {
       setIsRightSidebarOpen(false)
     } else {
       setIsRightSidebarOpen(true)
@@ -87,6 +93,11 @@ export default function Home() {
     setIsRightSidebarOpen(!isRightSidebarOpen)
   }
   const openRightSidebar = () => setIsRightSidebarOpen(true)
+
+  const handleSelectProject = (project: CategorizedProject | null) => {
+    setSelectedProject(project)
+    if (project) setIsRightSidebarOpen(true)
+  }
 
   return (
     <div className="flex flex-col h-screen bg-black">
@@ -153,22 +164,25 @@ export default function Home() {
           className="flex-1 min-w-0 flex flex-col transition-all duration-300"
           style={{ marginRight: isRightSidebarOpen ? rightSidebarWidth + 8 : 0 }}
         >
-          <MainContent activeSection={activeSection} setActiveSection={setActiveSection} onOpenRightSidebar={openRightSidebar} />
+          <MainContent activeSection={activeSection} setActiveSection={setActiveSection} onOpenRightSidebar={openRightSidebar} onSelectProject={handleSelectProject} />
         </div>
-        <RightSidebar 
-          isOpen={isRightSidebarOpen} 
-          onClose={() => setIsRightSidebarOpen(false)} 
+        <RightSidebar
+          isOpen={isRightSidebarOpen}
+          onClose={() => { setIsRightSidebarOpen(false); setSelectedProject(null) }}
           setActiveSection={setActiveSection}
           width={rightSidebarWidth}
           setWidth={setRightSidebarWidth}
+          selectedProject={selectedProject}
+          onClearProject={() => setSelectedProject(null)}
         />
       </div>
       <div className="px-2 pb-2">
-        <PlayerControls 
+        <PlayerControls
           onToggleRightSidebar={toggleRightSidebar}
           isRightSidebarOpen={isRightSidebarOpen}
         />
       </div>
+      <PortalTour />
     </div>
   )
 }

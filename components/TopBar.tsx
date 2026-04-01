@@ -179,7 +179,7 @@ export function TopBar({ onBack, onForward, canGoBack = true, canGoForward = tru
         </button>
       </div>
       {/* Search bar - centered */}
-      <div className="flex-1 flex justify-center max-w-md relative">
+      <div data-tour="search-bar" className="flex-1 flex justify-center max-w-md relative">
         <div className="relative w-full">
           <Search size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
           <input

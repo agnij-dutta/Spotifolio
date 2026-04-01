@@ -254,6 +254,7 @@ export default function RootLayout({
             />
           </>
         )}
+        <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
       </head>
       <body className="bg-black text-white">{children}</body>
     </html>

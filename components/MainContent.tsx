@@ -1,6 +1,6 @@
 "use client"
 
-import { Play, Download, Shuffle, ArrowUpRight, Sparkles } from "lucide-react"
+import { Play, Download, Shuffle } from "lucide-react"
 import Image from "next/image"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { useEffect, useState } from "react"
@@ -15,6 +15,9 @@ const downloadResume = () => {
 }
 import { fetchGitHubProjects, CategorizedProject } from "@/lib/github"
 import { Loading, LoadingRow, LoadingCard } from "@/components/ui/loading"
+import { LibrarySection } from "@/components/LibrarySection"
+import { AchievementsSection } from "@/components/AchievementsSection"
+import { Code2 } from "lucide-react"
 
 const portfolioData = {
   Education: {
@@ -213,154 +216,6 @@ const homeHero = {
   ],
 }
 
-const homeQuickFilters: { title: string; detail: string; meta: string; target: PortfolioSection }[] = [
-  {
-    title: "Work Experience",
-    detail: "Workwise, HackQuest, Project Control & Systems",
-    meta: "3 live roles",
-    target: "Work Experience",
-  },
-  {
-    title: "Education",
-    detail: "Bachelor's Data Science & AI Applications · IIT Madras",
-    meta: "",
-    target: "Education",
-  },
-  {
-    title: "AI Projects",
-    detail: "Retention intelligence, resume agent, ML ops",
-    meta: "GitHub drops",
-    target: "AI Projects",
-  },
-  {
-    title: "Skills & Tools",
-    detail: "Next.js, Supabase, Python, ML stack",
-    meta: "Hands-on",
-    target: "Skills & Tools",
-  },
-]
-
-type HomeShelfCard = {
-  title: string
-  description: string
-  badge: string
-  meta: string
-  image: string
-  target: PortfolioSection
-  imageFit?: "cover" | "contain"
-}
-
-type HomeShelf = {
-  title: string
-  subtitle: string
-  cards: HomeShelfCard[]
-}
-
-const homeShelves: HomeShelf[] = [
-  {
-    title: "Made For You",
-    subtitle: "Snapshots of current work on repeat",
-    cards: [
-      {
-        title: "Ops Autopilot",
-        description: "Designing Workwise's admin control room as an SDE intern to lift productivity by 85%.",
-        badge: "Workwise · 2025 — Present",
-        meta: "Next.js · Supabase · tRPC",
-        image: "/workwise.png",
-        imageFit: "contain",
-        target: "Work Experience",
-      },
-      {
-        title: "Builder Signals",
-        description: "Producing developer advocacy programs and content to keep HackQuest's community shipping.",
-        badge: "HackQuest · 2024 — Present",
-        meta: "Content ops · Community tooling",
-        image: "/hackquest.webp",
-        target: "Work Experience",
-      },
-      {
-        title: "Retention Intelligence",
-        description: "Modeling churn drivers for Project Control & Systems to keep 20% more customers engaged.",
-        badge: "Project Control & Systems · 2023 — 2024",
-        meta: "Python · ML notebooks",
-        image: "/placeholder.jpg",
-        target: "Work Experience",
-      },
-    ],
-  },
-  {
-    title: "Learning Queue",
-    subtitle: "Academic and research sets I loop daily",
-    cards: [
-      {
-        title: "Data Science Studio",
-        description: "Bachelor's Data Science & AI Applications curriculum at IIT Madras with a focus on product analytics.",
-        badge: "IIT Madras · Core Track",
-        meta: "Statistics · Data pipelines",
-        image: "/iit-madras-logo.svg",
-        imageFit: "contain",
-        target: "Education",
-      },
-      {
-        title: "ML Minor Sessions",
-        description: "Computer vision and generative modeling labs forming the minor specialization.",
-        badge: "IIT Madras · ML Minor",
-        meta: "TensorFlow · PyTorch",
-        image: "/skill-icons.jpg",
-        target: "Education",
-      },
-      {
-        title: "Storytelling for DevRel",
-        description: "Narratives that turn technical work into repeatable learning for HackQuest builders.",
-        badge: "HackQuest · Live content",
-        meta: "Workshops · Guides",
-        image: "/hackquest.webp",
-        target: "Work Experience",
-      },
-    ],
-  },
-  {
-    title: "Prototype Radio",
-    subtitle: "Mix of personal builds powering this portfolio",
-    cards: [
-      {
-        title: "Spotify UI Experiments",
-        description: "Recreated Spotify's home stack in Next.js to double as a living portfolio hub.",
-        badge: "Web Project",
-        meta: "Next.js · Tailwind · Shadcn",
-        image: "/placeholder-logo.png",
-        imageFit: "contain",
-        target: "Web Projects",
-      },
-      {
-        title: "Resume Generator",
-        description: "One-click PDF generation scripted to keep my story consistent across drops.",
-        badge: "Automation",
-        meta: "TypeScript · PDFKit",
-        image: "/placeholder-logo.svg",
-        imageFit: "contain",
-        target: "AI Projects",
-      },
-      {
-        title: "Data Viz Pack",
-        description: "Reusable chart blocks for explaining ML insights to non-technical partners.",
-        badge: "Toolkit",
-        meta: "D3 · Observable",
-        image: "/placeholder-user.jpg",
-        target: "Skills & Tools",
-      },
-    ],
-  },
-]
-
-const homeSpotlight = {
-  title: "Workwise Command Center",
-  description: "Built a unified workspace for ops leads with predictive tickets, contextual dashboards, and automated follow-ups — lifting admin productivity by 85%.",
-  image: "/workwise.png",
-  meta: ["SDE Intern", "2025 — Present"],
-  target: "Work Experience" as PortfolioSection,
-}
-
 const homeTimeline: { year: string; title: string; description: string; badge?: string; target: SectionTarget }[] = [
   {
     year: "2025",
@@ -389,18 +244,6 @@ const homeTimeline: { year: string; title: string; description: string; badge?: 
     target: "Education",
   },
 ]
-
-const homeNowPlaying = {
-  title: "Data Science & AI Applications",
-  description: "Undergraduate journey at IIT Madras blending statistics, ML, and product thinking.",
-  bullets: [
-    "Major: Data Science & AI Applications",
-    "Minor: Machine Learning",
-    "Studios: Computer Vision, Causal ML, Product Analytics",
-  ],
-  image: "/iit-madras-logo.svg",
-  target: "Education" as PortfolioSection,
-}
 
 const sectionColumns: Record<string, { label: string; field: string; icon?: boolean }[]> = {
   "Education": [
@@ -451,9 +294,10 @@ interface MainContentProps {
   activeSection: string
   setActiveSection: (section: string) => void
   onOpenRightSidebar: () => void
+  onSelectProject?: (project: CategorizedProject | null) => void
 }
 
-export function MainContent({ activeSection, setActiveSection, onOpenRightSidebar }: MainContentProps) {
+export function MainContent({ activeSection, setActiveSection, onOpenRightSidebar, onSelectProject }: MainContentProps) {
   const [githubProjects, setGitHubProjects] = useState<{
     'AI Projects': CategorizedProject[]
     'Web Projects': CategorizedProject[]
@@ -492,7 +336,17 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
   const sectionNames = Object.keys(portfolioData)
 
   if (activeSection === "Home") {
-    return <HomeShowcase setActiveSection={setActiveSection} />
+    return <HomeShowcase setActiveSection={setActiveSection} onSelectProject={onSelectProject} githubProjects={githubProjects} isLoading={isLoading} />
+  }
+
+  // Handle the new Library section (Your Library -> Top Projects)
+  if (activeSection === "Your Library") {
+    return <LibrarySection setActiveSection={setActiveSection} onSelectProject={onSelectProject} />
+  }
+
+  // Handle the new Achievements section (Create Playlist + Liked Songs -> Achievements)
+  if (activeSection === "Achievements") {
+    return <AchievementsSection setActiveSection={setActiveSection} />
   }
 
   // Merge GitHub data with hardcoded data
@@ -531,40 +385,41 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
       <div className={`bg-gradient-to-b ${currentData.gradient} rounded-t-xl p-4 md:p-8 relative`}>
         {/* Fade gradient overlay */}
         <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#121212] to-transparent pointer-events-none"></div>
-        {/* Section Header */}
-        <div className="mb-8">
-          <p className="text-sm font-semibold">PORTFOLIO</p>
-          <h2 className="text-4xl md:text-6xl font-bold mt-2 mb-4">{currentData.title}</h2>
-          <p className="text-base text-gray-300">{currentData.description}</p>
+        {/* Playlist-style header */}
+        <div className="mb-6">
+          <p className="text-xs font-medium uppercase tracking-wider">Playlist</p>
+          <h2 className="text-4xl md:text-7xl font-bold mt-2 mb-4">{currentData.title}</h2>
+          <p className="text-sm text-[#a7a7a7]">{currentData.description}</p>
+          <p className="text-sm text-[#a7a7a7] mt-1">
+            <span className="font-bold text-white">Agnij Dutta</span>
+            <span className="mx-1">&bull;</span>
+            {currentData.items.length} items
+          </p>
         </div>
 
-        {/* Spotify-style controls */}
-        <div className="mb-8 flex items-center gap-4">
-          {/* Play Button */}
+        {/* Controls */}
+        <div className="mb-4 flex items-center gap-4">
           <a
             href="https://drive.google.com/uc?export=download&id=1ATfZjD1YXQlBkNpUVVPtonMGkCvjYo-A"
             download
-            className="w-14 h-14 flex items-center justify-center rounded-full bg-green-500 hover:bg-green-400 transition-colors shadow-lg focus:outline-none"
-            title="Play Resume"
+            className="w-14 h-14 flex items-center justify-center rounded-full bg-[#1DB954] hover:bg-[#1ed760] hover:scale-105 transition-all shadow-lg"
           >
-            <Play size={36} className="text-black" />
+            <Play size={28} className="text-black ml-1" fill="black" />
           </a>
-          {/* Shuffle Button */}
           <button
             onClick={handleShuffle}
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-[#232323] hover:bg-[#333] transition-colors text-white"
+            className="text-[#a7a7a7] hover:text-white transition-colors"
             title="Shuffle Section"
           >
-            <Shuffle size={28} />
+            <Shuffle size={24} />
           </button>
-          {/* Download Button */}
           <a
             href="https://drive.google.com/uc?export=download&id=1ATfZjD1YXQlBkNpUVVPtonMGkCvjYo-A"
             download="Agnij_Dutta_SoftwareDeveloper-2.pdf"
-            className="w-12 h-12 flex items-center justify-center rounded-full bg-[#232323] hover:bg-[#333] transition-colors text-white"
-            title="Download Resume (PDF)"
+            className="text-[#a7a7a7] hover:text-white transition-colors"
+            title="Download Resume"
           >
-            <Download size={28} />
+            <Download size={24} />
           </a>
         </div>
       </div>
@@ -595,10 +450,9 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
               </tr>
             ) : (
               currentData.items.map((item, index) => (
-                <tr key={index} className={`hover:bg-white/10 cursor-pointer ${('url' in item && item.url) ? 'hover:bg-blue-500/20' : ''}`} onClick={() => {
-                  // If it's a GitHub project, open the URL instead of sidebar
-                  if ('url' in item && typeof item.url === 'string' && item.url) {
-                    window.open(item.url, '_blank')
+                <tr key={index} className={`hover:bg-white/10 cursor-pointer`} onClick={() => {
+                  if ('url' in item && onSelectProject) {
+                    onSelectProject(item as CategorizedProject)
                   } else {
                     onOpenRightSidebar()
                   }
@@ -649,10 +503,9 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
           </div>
         ) : (
           currentData.items.map((item, index) => (
-            <div key={index} className={`bg-white/5 p-4 rounded-lg hover:bg-white/10 cursor-pointer ${('url' in item && item.url) ? 'hover:bg-blue-500/20' : ''}`} onClick={() => {
-              // If it's a GitHub project, open the URL instead of sidebar
-              if ('url' in item && typeof item.url === 'string' && item.url) {
-                window.open(item.url, '_blank')
+            <div key={index} className="bg-white/5 p-4 rounded-lg hover:bg-white/10 cursor-pointer" onClick={() => {
+              if ('url' in item && onSelectProject) {
+                onSelectProject(item as CategorizedProject)
               } else {
                 onOpenRightSidebar()
               }
@@ -691,210 +544,210 @@ export function MainContent({ activeSection, setActiveSection, onOpenRightSideba
   )
 }
 
-function HomeShowcase({ setActiveSection }: { setActiveSection: (section: SectionTarget) => void }) {
+// Spotify-style square album card for a project
+function ProjectAlbumCard({ project, onClick }: { project: CategorizedProject; onClick: () => void }) {
+  const [imgError, setImgError] = useState(false)
+  const [imgLoaded, setImgLoaded] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const hasScreenshot = project.screenshotUrl && project.homepage && !imgError
+
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="bg-[#181818] hover:bg-[#282828] rounded-lg p-3 w-[180px] flex-shrink-0 text-left transition-all duration-300 snap-start group relative"
+    >
+      {/* Square image */}
+      <div className="relative w-full aspect-square mb-3 rounded-md overflow-hidden shadow-lg shadow-black/40">
+        {hasScreenshot ? (
+          <>
+            <div className="absolute inset-0 bg-[#333]" />
+            <div className={`absolute inset-0 transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}>
+              <Image
+                src={project.screenshotUrl!}
+                alt={project.title}
+                fill
+                sizes="180px"
+                className="object-cover object-top"
+                onLoad={() => setImgLoaded(true)}
+                onError={() => setImgError(true)}
+                unoptimized
+              />
+            </div>
+          </>
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[#333] to-[#1a1a1a] flex items-center justify-center">
+            <Code2 size={36} className="text-white/20" />
+          </div>
+        )}
+        {/* Play button on hover - exactly like Spotify */}
+        <div className={`absolute bottom-2 right-2 w-12 h-12 rounded-full bg-[#1DB954] shadow-xl shadow-black/50 flex items-center justify-center transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+          <Play size={24} className="text-black ml-0.5" fill="black" />
+        </div>
+      </div>
+      <h3 className="text-sm font-bold text-white truncate">{project.title}</h3>
+      <p className="text-xs text-[#a7a7a7] mt-1 line-clamp-2">{project.description || project.type}</p>
+    </button>
+  )
+}
+
+function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghProjects, isLoading: ghLoading }: {
+  setActiveSection: (section: SectionTarget) => void
+  onSelectProject?: (project: CategorizedProject | null) => void
+  githubProjects: { 'AI Projects': CategorizedProject[]; 'Web Projects': CategorizedProject[]; 'Blockchain Projects': CategorizedProject[] }
+  isLoading: boolean
+}) {
+  const [homeFilter, setHomeFilter] = useState<'all' | 'projects' | 'experience'>('all')
+
+  // Time-based greeting like real Spotify
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+    if (hour < 12) return "Good morning"
+    if (hour < 18) return "Good afternoon"
+    return "Good evening"
+  }
+
+  // Quick-play items for the 2-row compact grid (like Spotify's top section)
+  const quickPlayItems: { title: string; icon: string; gradient: string; onClick: () => void }[] = [
+    { title: "Work Experience", icon: "/workwise.png", gradient: "from-green-700", onClick: () => setActiveSection("Work Experience") },
+    { title: "Education", icon: "/iit-madras-logo.svg", gradient: "from-blue-700", onClick: () => setActiveSection("Education") },
+    { title: "AI Projects", icon: "https://skillicons.dev/icons?i=python", gradient: "from-purple-700", onClick: () => setActiveSection("AI Projects") },
+    { title: "Web Projects", icon: "https://skillicons.dev/icons?i=react", gradient: "from-orange-700", onClick: () => setActiveSection("Web Projects") },
+    { title: "Blockchain", icon: "https://skillicons.dev/icons?i=solidity", gradient: "from-yellow-700", onClick: () => setActiveSection("Blockchain Projects") },
+    { title: "Skills & Tools", icon: "https://skillicons.dev/icons?i=typescript", gradient: "from-red-700", onClick: () => setActiveSection("Skills & Tools") },
+  ]
+
+  // Collect stats
+  const allProjects = ghProjects ? [...ghProjects['Web Projects'], ...ghProjects['AI Projects'], ...ghProjects['Blockchain Projects']] : []
+  const uniqueProjects = allProjects.filter((p, i, arr) => arr.findIndex(x => x.url === p.url) === i)
+  const deployedProjects = uniqueProjects.filter(p => p.homepage)
+  const totalStars = uniqueProjects.reduce((a, p) => a + p.stars, 0)
+
+  // Featured: top deployed projects (max 4)
+  const featured = deployedProjects.slice(0, 4)
+
+  // Build shelves
+  const shelves: { title: string; target: PortfolioSection; projects: CategorizedProject[] }[] = []
+  if (ghProjects) {
+    if (ghProjects['Web Projects'].length > 0) shelves.push({ title: "Web Projects", target: "Web Projects", projects: ghProjects['Web Projects'].slice(0, 8) })
+    if (ghProjects['Blockchain Projects'].length > 0) shelves.push({ title: "Blockchain & Web3", target: "Blockchain Projects", projects: ghProjects['Blockchain Projects'].slice(0, 8) })
+    if (ghProjects['AI Projects'].length > 0) shelves.push({ title: "AI & Data Science", target: "AI Projects", projects: ghProjects['AI Projects'].slice(0, 8) })
+  }
+
   return (
     <ScrollArea className="flex-1 min-w-0 bg-[#121212] text-white rounded-xl h-full">
-      <div className="p-4 md:p-8 space-y-8 min-w-0">
-        <section className="bg-gradient-to-r from-[#4421ff] via-[#161616] to-black rounded-3xl p-6 md:p-10 relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute -bottom-20 right-0 w-64 h-64 bg-green-500/20 blur-3xl" />
-            <div className="absolute -top-10 left-10 w-40 h-40 bg-purple-500/20 blur-2xl" />
-          </div>
-          <div className="flex flex-col xl:flex-row gap-8 relative">
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex-shrink-0">
-              <div className="absolute inset-0 rounded-3xl border border-white/10 shadow-2xl overflow-hidden bg-black/40">
-                <Image
-                  src={homeHero.cover}
-                  alt="Agnij Dutta portrait"
-                  fill
-                  sizes="(max-width: 640px) 192px, 224px"
-                  className="object-cover object-left"
-                  priority
-                />
-              </div>
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="flex items-center gap-2 text-sm uppercase tracking-[0.35em] text-green-300">
-                <Sparkles size={16} /> {homeHero.label}
-              </p>
-              <h2 className="text-4xl md:text-6xl font-bold mt-4">{homeHero.title}</h2>
-              <p className="mt-4 text-base md:text-lg text-gray-100 max-w-3xl">{homeHero.tagline}</p>
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {homeHero.stats.map((stat) => (
-                  <div key={stat.label} className="bg-white/5 rounded-2xl p-4 border border-white/10">
-                    <p className="text-2xl font-semibold text-white">{stat.value}</p>
-                    <p className="text-sm uppercase tracking-wide text-gray-300">{stat.label}</p>
-                    <p className="text-xs text-gray-400 mt-2">{stat.hint}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <button
-                  onClick={() => setActiveSection("Work Experience")}
-                  className="flex items-center gap-2 bg-green-500 text-black px-5 py-3 rounded-full font-semibold shadow-lg hover:bg-green-400 transition-colors"
-                >
-                  <Play size={18} fill="black" />
-                  Play my story
-                </button>
-                <button
-                  onClick={downloadResume}
-                  className="flex items-center gap-2 bg-white/10 border border-white/20 px-5 py-3 rounded-full font-semibold text-white hover:bg-white/20 transition-colors"
-                >
-                  <Download size={18} />
-                  Download resume
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
+      <div className="p-4 md:p-6 space-y-6 min-w-0">
 
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4 min-w-0">
-          {homeQuickFilters.map((filter) => (
+        {/* Greeting */}
+        <h1 data-tour="home-greeting" className="text-3xl font-bold">{getGreeting()}</h1>
+
+        {/* Filter pills */}
+        <div className="flex items-center gap-2">
+          {([['all', 'All'], ['projects', 'Projects'], ['experience', 'Experience']] as const).map(([key, label]) => (
             <button
-              key={filter.title}
-              onClick={() => setActiveSection(filter.target)}
-              className="bg-[#1c1c1c] rounded-2xl p-4 text-left border border-white/5 hover:border-white/20 transition-colors"
+              key={key}
+              onClick={() => setHomeFilter(key)}
+              className={`px-3 py-1.5 rounded-full text-sm font-medium transition-colors ${homeFilter === key ? 'bg-white text-black' : 'bg-[#232323] text-white hover:bg-[#2a2a2a]'}`}
             >
-              <p className="text-xs uppercase tracking-[0.25em] text-green-400">{filter.meta}</p>
-              <h3 className="text-xl font-semibold mt-3">{filter.title}</h3>
-              <p className="text-sm text-gray-400 mt-2">{filter.detail}</p>
-              <div className="mt-4 flex items-center text-sm text-white/70 gap-2">
-                Dive in <ArrowUpRight size={16} />
-              </div>
+              {label}
             </button>
           ))}
-        </section>
+        </div>
 
-        <section className="grid xl:grid-cols-[2fr_1fr] gap-6 min-w-0">
-          <div className="space-y-6 min-w-0">
-            {homeShelves.map((shelf) => (
-              <div key={shelf.title} className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h2 className="text-2xl font-semibold">{shelf.title}</h2>
-                    <p className="text-sm text-gray-400">{shelf.subtitle}</p>
+        {/* Quick-play compact grid */}
+        <div data-tour="quick-play" className="grid grid-cols-2 md:grid-cols-3 gap-2">
+          {quickPlayItems.map((item) => (
+            <button
+              key={item.title}
+              onClick={item.onClick}
+              className="flex items-center bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded-md overflow-hidden transition-colors group h-[56px]"
+            >
+              <div className={`w-[56px] h-[56px] flex-shrink-0 bg-gradient-to-br ${item.gradient} to-[#121212] flex items-center justify-center shadow-md`}>
+                <Image src={item.icon} alt={item.title} width={36} height={36} className="object-contain" />
+              </div>
+              <span className="px-3 text-sm font-bold text-white truncate">{item.title}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Featured projects - deployed highlights with screenshots */}
+        {(homeFilter === 'all' || homeFilter === 'projects') && featured.length > 0 && (
+          <div data-tour="featured-projects">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold">Featured Projects</h2>
+              <button onClick={() => setActiveSection("Your Library")} className="text-sm font-bold text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {featured.map((project) => (
+                <ProjectAlbumCard key={project.url} project={project} onClick={() => onSelectProject?.(project)} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Experience timeline */}
+        {(homeFilter === 'all' || homeFilter === 'experience') && (
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-2xl font-bold">Jump back in</h2>
+              <button onClick={() => setActiveSection("Work Experience")} className="text-sm font-bold text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
+            </div>
+            <div className="flex gap-3 overflow-x-auto pb-2">
+              {homeTimeline.map((entry) => (
+                <button
+                  key={`${entry.year}-${entry.title}`}
+                  onClick={() => entry.target !== "Home" && setActiveSection(entry.target)}
+                  className="bg-[#181818] hover:bg-[#282828] rounded-lg p-3 w-[180px] flex-shrink-0 text-left transition-all duration-300"
+                >
+                  <div className="relative w-full aspect-square mb-3 rounded-md overflow-hidden bg-gradient-to-br from-[#333] to-[#1a1a1a] flex items-center justify-center">
+                    {entry.badge && (
+                      <span className="absolute top-2 right-2 text-[10px] px-2 py-0.5 rounded-full bg-[#1DB954] text-black font-bold">{entry.badge}</span>
+                    )}
+                    <p className="text-3xl font-bold text-white/60">{entry.year}</p>
                   </div>
-                  <button
-                    onClick={() => setActiveSection(shelf.cards[0].target)}
-                    className="text-sm text-gray-300 hover:text-white flex items-center gap-1"
-                  >
-                    Show all <ArrowUpRight size={16} />
-                  </button>
-                </div>
-                <div className="flex gap-4 overflow-x-auto pb-2 snap-x snap-mandatory">
-                  {shelf.cards.map((card) => (
-                    <button
-                      key={card.title}
-                      onClick={() => setActiveSection(card.target)}
-                      className="bg-[#181818] rounded-2xl p-4 w-full sm:w-72 flex-shrink-0 text-left border border-white/5 hover:border-white/20 transition-colors snap-start"
-                    >
-                      <div className={`relative w-full aspect-[4/3] mb-4 overflow-hidden rounded-xl ${card.imageFit === 'contain' ? 'bg-white/5 flex items-center justify-center' : ''}`}>
-                        <Image
-                          src={card.image}
-                          alt={card.title}
-                          fill
-                          sizes="(max-width: 768px) 70vw, 280px"
-                          className={`${card.imageFit === 'contain' ? 'object-contain p-6' : 'object-cover'}`}
-                        />
+                  <h3 className="text-sm font-bold text-white truncate">{entry.title}</h3>
+                  <p className="text-xs text-[#a7a7a7] mt-1 line-clamp-2">{entry.description}</p>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Project category shelves */}
+        {(homeFilter === 'all' || homeFilter === 'projects') && (
+          ghLoading ? (
+            <div className="space-y-8">
+              {[1, 2].map(i => (
+                <div key={i}>
+                  <div className="h-7 w-48 bg-white/5 rounded animate-pulse mb-4" />
+                  <div className="flex gap-3">
+                    {[1, 2, 3, 4, 5].map(j => (
+                      <div key={j} className="w-[180px] flex-shrink-0">
+                        <div className="w-full aspect-square bg-white/5 rounded-md animate-pulse mb-2" />
+                        <div className="h-4 w-24 bg-white/5 rounded animate-pulse" />
                       </div>
-                      <p className="text-xs uppercase tracking-[0.3em] text-gray-400">{card.badge}</p>
-                      <h3 className="text-lg font-semibold mt-2">{card.title}</h3>
-                      <p className="text-sm text-gray-400 mt-2">{card.description}</p>
-                      <p className="text-xs text-gray-500 mt-3">{card.meta}</p>
-                    </button>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            shelves.map((shelf) => (
+              <div key={shelf.title}>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-2xl font-bold hover:underline cursor-pointer" onClick={() => setActiveSection(shelf.target)}>{shelf.title}</h2>
+                  <button onClick={() => setActiveSection(shelf.target)} className="text-sm font-bold text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
+                </div>
+                <div className="flex gap-3 overflow-x-auto pb-2">
+                  {shelf.projects.map((project) => (
+                    <ProjectAlbumCard key={project.url} project={project} onClick={() => onSelectProject?.(project)} />
                   ))}
                 </div>
               </div>
-            ))}
-          </div>
-
-          <div className="space-y-6 min-w-0">
-            <section className="bg-[#191919] rounded-2xl p-6 border border-white/5">
-              <p className="text-xs uppercase tracking-[0.3em] text-green-400">Now Playing</p>
-              <div className="flex items-center gap-4 mt-4">
-                <Image
-                  src={homeNowPlaying.image}
-                  alt="IIT Madras"
-                  width={64}
-                  height={64}
-                  className="rounded-xl bg-white/5 p-2"
-                />
-                <div>
-                  <h3 className="text-2xl font-semibold">{homeNowPlaying.title}</h3>
-                  <p className="text-sm text-gray-400">{homeNowPlaying.description}</p>
-                </div>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-gray-300">
-                {homeNowPlaying.bullets.map((bullet) => (
-                  <li key={bullet} className="flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-green-400 rounded-full" /> {bullet}
-                  </li>
-                ))}
-              </ul>
-              <button
-                onClick={() => setActiveSection(homeNowPlaying.target)}
-                className="mt-5 text-sm text-white/80 underline underline-offset-4"
-              >
-                Go to education
-              </button>
-            </section>
-
-            <section className="bg-[#191919] rounded-2xl p-6 border border-white/5">
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.4em] text-gray-400">Journey Timeline</p>
-                  <h3 className="text-xl font-semibold">Highlights queue</h3>
-                </div>
-              </div>
-              <div className="space-y-4">
-                {homeTimeline.map((entry) => (
-                  <button
-                    key={`${entry.year}-${entry.title}`}
-                    onClick={() => entry.target !== "Home" && setActiveSection(entry.target)}
-                    className="w-full text-left bg-white/5 rounded-xl p-4 hover:bg-white/10 transition-colors"
-                  >
-                    <div className="flex items-center justify-between">
-                      <p className="text-sm text-gray-400">{entry.year}</p>
-                      {entry.badge && (
-                        <span className="text-xs px-2 py-1 rounded-full bg-green-500/20 text-green-300">{entry.badge}</span>
-                      )}
-                    </div>
-                    <h4 className="text-lg font-semibold mt-1">{entry.title}</h4>
-                    <p className="text-sm text-gray-400 mt-1">{entry.description}</p>
-                  </button>
-                ))}
-              </div>
-            </section>
-
-            <section className="bg-gradient-to-b from-[#202020] to-[#0f0f0f] rounded-2xl p-6 border border-white/5">
-              <p className="text-xs uppercase tracking-[0.4em] text-gray-400">Spotlight</p>
-              <div className="relative w-full h-48 mt-4 rounded-2xl overflow-hidden bg-white/5 flex items-center justify-center">
-                <Image
-                  src={homeSpotlight.image}
-                  alt={homeSpotlight.title}
-                  fill
-                  sizes="(max-width: 768px) 90vw, 320px"
-                  className="object-contain p-6"
-                />
-              </div>
-              <h3 className="text-2xl font-semibold mt-4">{homeSpotlight.title}</h3>
-              <p className="text-sm text-gray-300 mt-2">{homeSpotlight.description}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {homeSpotlight.meta.map((meta) => (
-                  <span key={meta} className="text-xs px-3 py-1 rounded-full bg-white/10 text-gray-200">
-                    {meta}
-                  </span>
-                ))}
-              </div>
-              <button
-                onClick={() => setActiveSection(homeSpotlight.target)}
-                className="mt-5 flex items-center gap-2 text-green-300 text-sm"
-              >
-                Open case study <ArrowUpRight size={16} />
-              </button>
-            </section>
-          </div>
-        </section>
+            ))
+          )
+        )}
       </div>
     </ScrollArea>
   )
