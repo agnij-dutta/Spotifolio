@@ -29,8 +29,11 @@ export interface CategorizedProject {
   language: string
   homepage: string | null
   screenshotUrl: string | null
+  ogImageUrl: string | null
   updatedAt: string
   topics: string[]
+  owner: string
+  repoName: string
 }
 
 // GitHub username - you can change this to your username
@@ -357,12 +360,19 @@ function categorizeProject(repo: GitHubRepo, readmeContent: string = ''): ('AI P
   return categories
 }
 
-// Generate a screenshot image URL using Microlink (free tier, returns direct PNG)
+// Screenshot of the deployed website (best for projects with live homepages)
 export function getScreenshotImageUrl(homepageUrl: string | null): string | null {
   if (!homepageUrl) return null
   let url = homepageUrl.trim()
   if (!url.startsWith('http')) url = `https://${url}`
-  return `https://api.microlink.io/?url=${encodeURIComponent(url)}&screenshot=true&meta=false&embed=screenshot.url`
+  // thum.io is free + unlimited and returns the PNG directly
+  return `https://image.thum.io/get/width/800/crop/600/noanimate/${url}`
+}
+
+// GitHub's auto-generated social preview image — always works for any public repo.
+// Use as the canonical project image since it exists for every repo (with/without homepage).
+export function getOgImageUrl(owner: string, repo: string): string {
+  return `https://opengraph.githubassets.com/1/${owner}/${repo}`
 }
 
 function getProjectIcon(language: string | null, topics: string[]): string {
@@ -496,8 +506,11 @@ export async function fetchGitHubProjects(): Promise<{
         language: repo.language || 'Unknown',
         homepage: repo.homepage || null,
         screenshotUrl: getScreenshotImageUrl(repo.homepage),
+        ogImageUrl: getOgImageUrl(username, repo.name),
         updatedAt: repo.pushed_at || repo.updated_at,
         topics: repo.topics || [],
+        owner: username,
+        repoName: repo.name,
       }
       
       // Add project to all applicable categories

@@ -88,9 +88,28 @@ function ProjectDetailPanel({ project, onBack, setActiveSection }: {
   onBack?: () => void
   setActiveSection?: (section: string) => void
 }) {
-  const [imgError, setImgError] = useState(false)
+  // Two-attempt image strategy: try screenshotUrl first, fall back to ogImageUrl
+  const initialSrc = project.screenshotUrl && project.homepage
+    ? project.screenshotUrl
+    : project.ogImageUrl ?? null
+  const [currentSrc, setCurrentSrc] = useState<string | null>(initialSrc)
+  const [triedFallback, setTriedFallback] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
-  const hasScreenshot = project.screenshotUrl && project.homepage && !imgError
+
+  const handleImgError = () => {
+    if (!triedFallback && project.ogImageUrl && currentSrc !== project.ogImageUrl) {
+      setCurrentSrc(project.ogImageUrl)
+      setTriedFallback(true)
+      setImgLoaded(false)
+    } else {
+      setCurrentSrc(null)
+    }
+  }
+
+  const hasImage = !!currentSrc
+  const description = project.description && project.description.trim().length > 0
+    ? project.description
+    : `A ${project.language ?? 'code'} project by Agnij Dutta.`
 
   return (
     <div className="p-0">
@@ -106,19 +125,19 @@ function ProjectDetailPanel({ project, onBack, setActiveSection }: {
       )}
 
       {/* Screenshot header */}
-      <div className="relative w-full aspect-video overflow-hidden">
-        {hasScreenshot ? (
+      <div className="relative w-full aspect-video overflow-hidden shadow-2xl shadow-black/40">
+        {hasImage ? (
           <>
-            <div className="absolute inset-0 bg-[#282828]" />
-            <div className={`absolute inset-0 transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}>
+            <div className="absolute inset-0 bg-[#282828] rounded-md" />
+            <div className={`absolute inset-0 transition-opacity duration-500 rounded-md overflow-hidden ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}>
               <Image
-                src={project.screenshotUrl!}
+                src={currentSrc!}
                 alt={project.title}
                 fill
                 sizes="400px"
                 className="object-cover object-top"
                 onLoad={() => setImgLoaded(true)}
-                onError={() => setImgError(true)}
+                onError={handleImgError}
                 unoptimized
               />
             </div>
@@ -143,12 +162,50 @@ function ProjectDetailPanel({ project, onBack, setActiveSection }: {
             <span className="text-xs font-bold text-black">Live</span>
           </div>
         )}
+
+        {/* Floating play-style CTA inside preview */}
+        {project.homepage && (
+          <a
+            href={project.homepage}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute bottom-4 right-4 w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] hover:scale-105 flex items-center justify-center shadow-xl shadow-black/50 transition-all"
+            title="Visit live site"
+          >
+            <Globe size={20} className="text-black" />
+          </a>
+        )}
       </div>
 
       {/* Project info */}
       <div className="px-6 -mt-4 relative z-10">
         <h2 className="text-2xl font-bold">{project.title}</h2>
-        <p className="text-sm text-[#a7a7a7] mt-2 leading-relaxed">{project.description}</p>
+
+        {/* Quick chip row: Live + Source */}
+        <div className="flex flex-wrap items-center gap-2 mt-3">
+          {project.homepage && (
+            <a
+              href={project.homepage}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1f1f1f] hover:bg-[#2a2a2a] text-xs text-white transition-colors"
+            >
+              <Globe size={12} />
+              Live
+            </a>
+          )}
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#1f1f1f] hover:bg-[#2a2a2a] text-xs text-white transition-colors"
+          >
+            <Code2 size={12} />
+            Source
+          </a>
+        </div>
+
+        <p className="text-sm text-[#e7e7e7] mt-3 leading-relaxed">{description}</p>
 
         {/* Stats row */}
         <div className="flex items-center gap-4 mt-4 text-sm text-[#a7a7a7]">
@@ -299,7 +356,7 @@ function AboutPanel({ onAboutOpen, setActiveSection }: { onAboutOpen: () => void
       <div className="px-6 mb-8">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold">Credits</h3>
-          <button className="text-sm text-[#a7a7a7] hover:text-white" onClick={goToEducation}>Show all</button>
+          <button className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7] hover:text-white transition-colors" onClick={goToEducation}>Show all</button>
         </div>
         <div className="bg-[#1F1F1F] p-4 rounded-lg cursor-pointer hover:bg-[#2A2A2A] transition-colors" onClick={goToEducation}>
           <h4 className="font-medium text-white mb-1">{aboutData.education.institute}</h4>
@@ -314,7 +371,7 @@ function AboutPanel({ onAboutOpen, setActiveSection }: { onAboutOpen: () => void
       <div className="px-6 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold">On tour</h3>
-          <button className="text-sm text-[#a7a7a7] hover:text-white" onClick={goToWorkExperience}>Show all</button>
+          <button className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7] hover:text-white transition-colors" onClick={goToWorkExperience}>Show all</button>
         </div>
         <div className="space-y-4">
           {aboutData.workExperiences.map((exp, i) => (

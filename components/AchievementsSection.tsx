@@ -10,7 +10,12 @@ import {
   Clock,
   MoreHorizontal,
   ExternalLink,
+  Shuffle,
+  Download,
 } from "lucide-react"
+
+const RESUME_URL = "https://drive.google.com/uc?export=download&id=1ATfZjD1YXQlBkNpUVVPtonMGkCvjYo-A"
+const RESUME_FILENAME = "Agnij_Dutta_SoftwareDeveloper-2.pdf"
 import Image from "next/image"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { achievementCategories, Achievement, allAchievements } from "@/data/achievements"
@@ -40,7 +45,14 @@ function AchievementRow({ achievement, index }: { achievement: Achievement; inde
       {/* Index */}
       <div className="flex items-center justify-center">
         {isHovered ? (
-          <Play size={14} className="text-white" fill="white" />
+          <a
+            href={RESUME_URL}
+            download={RESUME_FILENAME}
+            aria-label="Download resume"
+            className="flex items-center justify-center"
+          >
+            <Play size={14} className="text-white" fill="white" />
+          </a>
         ) : (
           <span className="text-sm text-[#a7a7a7]">{index + 1}</span>
         )}
@@ -124,7 +136,7 @@ export function AchievementsSection({ setActiveSection }: AchievementsSectionPro
 
           <div className="flex-1 min-w-0">
             <p className="text-xs font-medium uppercase tracking-wider">Playlist</p>
-            <h1 className="text-4xl md:text-7xl font-bold mt-2">Achievements</h1>
+            <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight mt-2">Achievements</h1>
             <div className="flex items-center gap-1 mt-4 text-sm text-[#a7a7a7]">
               <span className="font-bold text-white">Agnij Dutta</span>
               <span className="mx-1">&bull;</span>
@@ -142,9 +154,30 @@ export function AchievementsSection({ setActiveSection }: AchievementsSectionPro
 
       {/* Controls row */}
       <div className="px-6 md:px-8 py-4 flex items-center gap-6">
-        <button className="w-14 h-14 rounded-full bg-[#1DB954] hover:bg-[#1ed760] hover:scale-105 transition-all flex items-center justify-center shadow-lg">
+        <a
+          href={RESUME_URL}
+          download={RESUME_FILENAME}
+          aria-label="Download resume"
+          className="w-14 h-14 rounded-full bg-[#1DB954] hover:bg-[#1ed760] hover:scale-105 transition-all flex items-center justify-center shadow-lg"
+        >
           <Play size={28} className="text-black ml-1" fill="black" />
-        </button>
+        </a>
+        <a
+          href={RESUME_URL}
+          download={RESUME_FILENAME}
+          aria-label="Download resume"
+          className="text-[#a7a7a7] hover:text-white transition-colors"
+        >
+          <Shuffle size={28} />
+        </a>
+        <a
+          href={RESUME_URL}
+          download={RESUME_FILENAME}
+          aria-label="Download resume"
+          className="text-[#a7a7a7] hover:text-white transition-colors"
+        >
+          <Download size={28} />
+        </a>
       </div>
 
       {/* Table header */}

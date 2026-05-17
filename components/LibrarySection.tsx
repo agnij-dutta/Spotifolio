@@ -47,34 +47,60 @@ function AnimatedCounter({ value, duration = 1000 }: { value: number; duration?:
 }
 
 function ProjectScreenshot({ project, className = "" }: { project: TopProject; className?: string }) {
+  // Derive OG fallback URL from project.url (e.g. https://github.com/agnij-dutta/repo)
+  const ogFallback = (() => {
+    try {
+      const parts = (project.url || '').split('/').filter(Boolean)
+      const repoName = parts[parts.length - 1]
+      const owner = parts[parts.length - 2] || 'agnij-dutta'
+      if (!repoName) return ''
+      return `https://opengraph.githubassets.com/1/${owner}/${repoName}`
+    } catch {
+      return ''
+    }
+  })()
+
+  const [currentSrc, setCurrentSrc] = useState<string>(project.image || ogFallback)
+  const [triedOg, setTriedOg] = useState<boolean>(!project.image || project.image === ogFallback)
   const [imgError, setImgError] = useState(false)
   const [imgLoaded, setImgLoaded] = useState(false)
 
-  const hasScreenshot = project.image && project.homepage && !imgError
+  const hasImage = !!currentSrc && !imgError
+
+  const handleError = () => {
+    // Second-chance: try the GitHub OG card if we haven't yet.
+    if (!triedOg && ogFallback && currentSrc !== ogFallback) {
+      setTriedOg(true)
+      setImgLoaded(false)
+      setCurrentSrc(ogFallback)
+      return
+    }
+    setImgError(true)
+  }
 
   return (
     <div className={`relative overflow-hidden ${className}`}>
       {/* Gradient background always visible as fallback */}
       <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient}`} />
 
-      {/* Language icon centered on gradient */}
-      {!hasScreenshot && (
+      {/* Language icon centered on gradient (final fallback) */}
+      {!hasImage && (
         <div className="absolute inset-0 flex items-center justify-center">
           <Code2 size={48} className="text-white/30" />
         </div>
       )}
 
       {/* Screenshot image */}
-      {hasScreenshot && (
+      {hasImage && (
         <div className={`absolute inset-0 transition-opacity duration-500 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}>
           <Image
-            src={project.image}
+            src={currentSrc}
             alt={`${project.name} screenshot`}
             fill
             sizes="(max-width: 768px) 50vw, 200px"
             className="object-cover object-top"
             onLoad={() => setImgLoaded(true)}
-            onError={() => setImgError(true)}
+            onError={handleError}
             unoptimized
           />
         </div>
@@ -114,7 +140,7 @@ function ProjectCard({ project, index, isPlaying, onPlay, onCardClick }: {
       }}
     >
       {/* Album art - screenshot or gradient */}
-      <div className="relative aspect-square mb-4 rounded-md overflow-hidden shadow-lg">
+      <div className="relative aspect-square mb-4 rounded-md overflow-hidden shadow-lg shadow-black/40">
         <ProjectScreenshot project={project} className="absolute inset-0" />
 
         {/* Shimmer on hover */}
@@ -130,7 +156,7 @@ function ProjectCard({ project, index, isPlaying, onPlay, onCardClick }: {
           className={`
             absolute bottom-2 right-2 w-12 h-12 rounded-full
             bg-[#1DB954] shadow-xl shadow-black/40 flex items-center justify-center
-            transition-all duration-300 ease-out hover:scale-110 hover:bg-[#1ed760]
+            transition-all duration-300 ease-out hover:scale-105 hover:bg-[#1ed760]
             ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}
           `}
         >
@@ -329,7 +355,7 @@ export function LibrarySection({ setActiveSection, onSelectProject }: LibrarySec
               <Sparkles size={14} className="text-[#1DB954]" />
               Your Library
             </p>
-            <h1 className="text-4xl md:text-5xl font-bold mt-2">All Projects</h1>
+            <h1 className="text-5xl md:text-8xl font-extrabold tracking-tight mt-2">All Projects</h1>
             <p className="text-gray-400 mt-2">
               {allProjects.length} repos from GitHub / Live data
             </p>

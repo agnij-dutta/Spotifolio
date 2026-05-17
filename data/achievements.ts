@@ -36,7 +36,7 @@ export const achievementCategories: AchievementCategory[] = [
         date: '2024',
         category: 'hackathon',
         description: 'Bounty winner at ETHGlobal New Delhi among 2000+ participants building decentralized applications.',
-        icon: 'https://assets.ethglobal.com/logo-ethglobal.svg',
+        icon: 'https://avatars.githubusercontent.com/u/57516568?s=200&v=4',
         color: '#627EEA',
         position: 'Bounty Winner',
         badge: 'Bounty Winner',
@@ -49,7 +49,7 @@ export const achievementCategories: AchievementCategory[] = [
         date: '2024',
         category: 'hackathon',
         description: 'First place out of 100+ teams at the Avalanche Team1 Hackathon in Kolkata.',
-        icon: 'https://cryptologos.cc/logos/avalanche-avax-logo.svg',
+        icon: 'https://cdn.simpleicons.org/avalanche/E84142',
         color: '#E84142',
         position: '1st Place',
         badge: '1st Place'
@@ -61,7 +61,7 @@ export const achievementCategories: AchievementCategory[] = [
         date: '2025',
         category: 'hackathon',
         description: 'Second place at the East India Blockchain Summit hackathon held at IIT Kharagpur.',
-        icon: 'https://skillicons.dev/icons?i=ethereum',
+        icon: 'https://upload.wikimedia.org/wikipedia/en/1/1c/IIT_Kharagpur_Logo.svg',
         color: '#3B82F6',
         position: '2nd Place',
         badge: '2nd Place'
@@ -85,7 +85,7 @@ export const achievementCategories: AchievementCategory[] = [
         date: '2024',
         category: 'hackathon',
         description: 'Fourth place at the Build on Stellar hackathon in Kolkata.',
-        icon: 'https://cryptologos.cc/logos/stellar-xlm-logo.svg',
+        icon: 'https://cdn.simpleicons.org/stellar/000000',
         color: '#7C3AED',
         position: '4th Place',
         badge: '4th Place'
@@ -97,7 +97,7 @@ export const achievementCategories: AchievementCategory[] = [
         date: '2025',
         category: 'hackathon',
         description: 'Second place at the Tech Triad Hackathon held at IIT Kharagpur.',
-        icon: 'https://skillicons.dev/icons?i=github',
+        icon: 'https://upload.wikimedia.org/wikipedia/en/1/1c/IIT_Kharagpur_Logo.svg',
         color: '#F59E0B',
         position: '2nd Place',
         badge: '2nd Place'
@@ -109,7 +109,7 @@ export const achievementCategories: AchievementCategory[] = [
         date: '2025',
         category: 'hackathon',
         description: 'Second place at the AI hackathon during KSHITIJ, the annual techno-management fest of IIT Kharagpur.',
-        icon: 'https://skillicons.dev/icons?i=pytorch',
+        icon: 'https://upload.wikimedia.org/wikipedia/en/1/1c/IIT_Kharagpur_Logo.svg',
         color: '#8B5CF6',
         position: '2nd Place',
         badge: '2nd Place'
