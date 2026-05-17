@@ -202,7 +202,7 @@ const portfolioData = {
 export { portfolioData }
 
 type PortfolioSection = keyof typeof portfolioData
-type SectionTarget = PortfolioSection | "Home"
+type SectionTarget = PortfolioSection | "Home" | "Your Library" | "Achievements"
 
 const homeHero = {
   cover: "/WhatsApp Image 2025-11-28 at 01.48.04.jpeg",
@@ -582,7 +582,7 @@ function ProjectAlbumCard({ project, onClick }: { project: CategorizedProject; o
           </div>
         )}
         {/* Play button on hover - exactly like Spotify */}
-        <div className={`absolute bottom-2 right-2 w-12 h-12 rounded-full bg-[#1DB954] shadow-xl shadow-black/50 flex items-center justify-center transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+        <div className={`absolute bottom-2 right-2 w-12 h-12 rounded-full bg-[#1DB954] hover:bg-[#1ed760] hover:scale-105 shadow-xl shadow-black/50 flex items-center justify-center transition-all duration-300 ${isHovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
           <Play size={24} className="text-black ml-0.5" fill="black" />
         </div>
       </div>
@@ -624,8 +624,8 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
   const deployedProjects = uniqueProjects.filter(p => p.homepage)
   const totalStars = uniqueProjects.reduce((a, p) => a + p.stars, 0)
 
-  // Featured: top deployed projects (max 4)
-  const featured = deployedProjects.slice(0, 4)
+  // Featured: top deployed projects (horizontal shelf, max 8)
+  const featured = deployedProjects.slice(0, 8)
 
   // Build shelves
   const shelves: { title: string; target: PortfolioSection; projects: CategorizedProject[] }[] = []
@@ -637,7 +637,7 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
 
   return (
     <ScrollArea className="flex-1 min-w-0 bg-[#121212] text-white rounded-xl h-full">
-      <div className="p-4 md:p-6 space-y-6 min-w-0">
+      <div className="p-6 pb-32 space-y-8 min-w-0 overflow-x-hidden">
 
         {/* Greeting */}
         <h1 data-tour="home-greeting" className="text-3xl font-bold">{getGreeting()}</h1>
@@ -656,17 +656,17 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
         </div>
 
         {/* Quick-play compact grid */}
-        <div data-tour="quick-play" className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <div data-tour="quick-play" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
           {quickPlayItems.map((item) => (
             <button
               key={item.title}
               onClick={item.onClick}
-              className="flex items-center bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded-md overflow-hidden transition-colors group h-[56px]"
+              className="flex items-center bg-[#2a2a2a] hover:bg-[#3a3a3a] rounded-md overflow-hidden transition-colors group h-[56px] min-w-0"
             >
               <div className={`w-[56px] h-[56px] flex-shrink-0 bg-gradient-to-br ${item.gradient} to-[#121212] flex items-center justify-center shadow-md`}>
                 <Image src={item.icon} alt={item.title} width={36} height={36} className="object-contain" />
               </div>
-              <span className="px-3 text-sm font-bold text-white truncate">{item.title}</span>
+              <span className="px-3 text-sm font-bold text-white truncate min-w-0">{item.title}</span>
             </button>
           ))}
         </div>
@@ -674,11 +674,11 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
         {/* Featured projects - deployed highlights with screenshots */}
         {(homeFilter === 'all' || homeFilter === 'projects') && featured.length > 0 && (
           <div data-tour="featured-projects">
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3">
               <h2 className="text-2xl font-bold">Featured Projects</h2>
-              <button onClick={() => setActiveSection("Your Library")} className="text-sm font-bold text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
+              <button onClick={() => setActiveSection("Your Library")} className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="flex gap-4 overflow-x-auto pb-2">
               {featured.map((project) => (
                 <ProjectAlbumCard key={project.url} project={project} onClick={() => onSelectProject?.(project)} />
               ))}
@@ -689,11 +689,11 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
         {/* Experience timeline */}
         {(homeFilter === 'all' || homeFilter === 'experience') && (
           <div>
-            <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-3">
               <h2 className="text-2xl font-bold">Jump back in</h2>
-              <button onClick={() => setActiveSection("Work Experience")} className="text-sm font-bold text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
+              <button onClick={() => setActiveSection("Work Experience")} className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
             </div>
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="flex gap-4 overflow-x-auto pb-2">
               {homeTimeline.map((entry) => (
                 <button
                   key={`${entry.year}-${entry.title}`}
@@ -720,8 +720,8 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
             <div className="space-y-8">
               {[1, 2].map(i => (
                 <div key={i}>
-                  <div className="h-7 w-48 bg-white/5 rounded animate-pulse mb-4" />
-                  <div className="flex gap-3">
+                  <div className="h-7 w-48 bg-white/5 rounded animate-pulse mb-3" />
+                  <div className="flex gap-4">
                     {[1, 2, 3, 4, 5].map(j => (
                       <div key={j} className="w-[180px] flex-shrink-0">
                         <div className="w-full aspect-square bg-white/5 rounded-md animate-pulse mb-2" />
@@ -735,11 +735,11 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
           ) : (
             shelves.map((shelf) => (
               <div key={shelf.title}>
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3">
                   <h2 className="text-2xl font-bold hover:underline cursor-pointer" onClick={() => setActiveSection(shelf.target)}>{shelf.title}</h2>
-                  <button onClick={() => setActiveSection(shelf.target)} className="text-sm font-bold text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
+                  <button onClick={() => setActiveSection(shelf.target)} className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7] hover:text-white transition-colors">Show all</button>
                 </div>
-                <div className="flex gap-3 overflow-x-auto pb-2">
+                <div className="flex gap-4 overflow-x-auto pb-2">
                   {shelf.projects.map((project) => (
                     <ProjectAlbumCard key={project.url} project={project} onClick={() => onSelectProject?.(project)} />
                   ))}

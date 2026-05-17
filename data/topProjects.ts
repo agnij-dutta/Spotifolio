@@ -40,17 +40,20 @@ function gradientForLanguage(lang: string | null): string {
   return 'from-[#1DB954] to-green-700'
 }
 
-import { CategorizedProject, getScreenshotImageUrl } from '@/lib/github'
+import { CategorizedProject } from '@/lib/github'
 
 /** Convert a CategorizedProject from the GitHub API into a TopProject for the UI. */
 export function toTopProject(p: CategorizedProject, index: number): TopProject {
   const isRecent = new Date(p.updatedAt).getTime() > Date.now() - 90 * 24 * 60 * 60 * 1000 // last 90 days
 
+  // Prefer deployed site screenshot, fall back to GitHub OG card (always exists for any repo)
+  const image = p.screenshotUrl || p.ogImageUrl || ''
+
   return {
     id: `gh-${index}-${p.title.replace(/\s+/g, '-').toLowerCase()}`,
     name: p.title,
     description: p.description,
-    image: p.screenshotUrl || '',
+    image,
     gradient: gradientForLanguage(p.language),
     techStack: [p.language, ...p.topics.slice(0, 3)].filter(Boolean),
     stars: p.stars,
