@@ -666,7 +666,7 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
               <div className={`w-[56px] h-[56px] flex-shrink-0 bg-gradient-to-br ${item.gradient} to-[#121212] flex items-center justify-center shadow-md`}>
                 <Image src={item.icon} alt={item.title} width={36} height={36} className="object-contain" />
               </div>
-              <span className="px-3 text-sm font-bold text-white truncate min-w-0">{item.title}</span>
+              <span className="px-3 text-sm font-bold text-white truncate min-w-0 flex-1">{item.title}</span>
             </button>
           ))}
         </div>
