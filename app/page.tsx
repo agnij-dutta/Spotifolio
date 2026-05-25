@@ -9,6 +9,7 @@ import { TopBar } from "../components/TopBar"
 import { PortalTour } from "../components/PortalTour"
 import { useSearchParams } from "next/navigation"
 import type { CategorizedProject } from "@/lib/github"
+import { SECTION_TO_SLUG, SLUG_TO_SECTION } from "@/lib/sections"
 
 const DEFAULT_SECTION = "Home"
 
@@ -58,6 +59,32 @@ export default function Home() {
       setIsRightSidebarOpen(false)
     } else {
       setIsRightSidebarOpen(true)
+    }
+  }, [activeSection])
+
+  // Hash <-> activeSection sync so sections are real shareable URLs
+  useEffect(() => {
+    const applyHash = () => {
+      const slug = window.location.hash.replace(/^#/, "")
+      const section = SLUG_TO_SECTION[slug]
+      if (section && section !== activeSection) {
+        setHistory((h) => [...h.slice(0, historyIndex + 1), section])
+        setHistoryIndex((i) => i + 1)
+        setActiveSectionState(section)
+      }
+    }
+    applyHash()
+    window.addEventListener("hashchange", applyHash)
+    return () => window.removeEventListener("hashchange", applyHash)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    const slug = SECTION_TO_SLUG[activeSection]
+    if (slug === undefined) return
+    const target = slug === "" ? window.location.pathname : `${window.location.pathname}#${slug}`
+    if (window.location.pathname + window.location.hash !== target) {
+      window.history.replaceState({}, "", target)
     }
   }, [activeSection])
 
@@ -113,17 +140,17 @@ export default function Home() {
           <a href="https://hackquest.io" rel="noopener noreferrer" target="_blank"> HackQuest</a> as a Developer Advocate. Specializes in <a href="https://react.dev" rel="noopener noreferrer" target="_blank">React</a>, <a href="https://nextjs.org" rel="noopener noreferrer" target="_blank">Next.js</a>, <a href="https://www.typescriptlang.org" rel="noopener noreferrer" target="_blank">TypeScript</a>, 
           blockchain protocols, smart contracts, machine learning, and data science. Connect on <a href="https://linkedin.com/in/agnij-dutta" rel="noopener noreferrer" target="_blank">LinkedIn</a> or <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>.
         </p>
-        <h2>Professional Experience</h2>
+        <h2 id="work-experience">Professional Experience</h2>
         <ul>
           <li><a href="https://workwise.io" rel="noopener noreferrer" target="_blank">SDE Intern at Workwise</a> - Built features to boost admin productivity by 85%</li>
           <li><a href="https://hackquest.io" rel="noopener noreferrer" target="_blank">Developer Advocate at HackQuest</a> - Community growth and maintenance</li>
           <li>Data Science Intern at Project Control & Systems - Increased customer retention by 20%</li>
         </ul>
-        <h2>Education</h2>
+        <h2 id="education">Education</h2>
         <p>
           Bachelor's in Data Science and AI Applications at <a href="https://www.iitm.ac.in" rel="noopener noreferrer" target="_blank">Indian Institute of Technology Madras</a>. Major in <a href="https://www.iitm.ac.in/ds" rel="noopener noreferrer" target="_blank">Data Science</a>, Minor in <a href="https://www.iitm.ac.in/ml" rel="noopener noreferrer" target="_blank">Machine Learning</a>.
         </p>
-        <h2>Technical Skills</h2>
+        <h2 id="skills">Technical Skills</h2>
         <ul>
           <li>Frontend: <a href="https://react.dev" rel="noopener noreferrer" target="_blank">React</a>, <a href="https://nextjs.org" rel="noopener noreferrer" target="_blank">Next.js</a>, <a href="https://www.typescriptlang.org" rel="noopener noreferrer" target="_blank">TypeScript</a>, JavaScript, HTML, CSS, Tailwind CSS</li>
           <li>Backend: <a href="https://nodejs.org" rel="noopener noreferrer" target="_blank">Node.js</a>, Express, REST APIs, GraphQL</li>
@@ -133,9 +160,41 @@ export default function Home() {
         </ul>
         <h2>Projects</h2>
         <p>
-          Explore <a href="#ai-projects">AI projects</a>, <a href="#web-projects">web applications</a>, and <a href="#blockchain-projects">blockchain solutions</a>. Portfolio includes 
-          machine learning models, full-stack web applications, and decentralized applications 
+          Explore <a href="#ai-projects">AI projects</a>, <a href="#web-projects">web applications</a>, and <a href="#blockchain-projects">blockchain solutions</a>. Portfolio includes
+          machine learning models, full-stack web applications, and decentralized applications
           built with modern technologies. View projects on <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>.
+        </p>
+        <h3 id="ai-projects">AI &amp; Machine Learning Projects</h3>
+        <p>
+          Machine learning, computer vision, and applied AI work — including model experimentation,
+          inference pipelines, and data-driven products. See latest AI repositories on <a href="https://github.com/agnij-dutta?tab=repositories" rel="noopener noreferrer" target="_blank">GitHub</a>.
+        </p>
+        <h3 id="web-projects">Web Projects</h3>
+        <p>
+          Full-stack web applications built with Next.js, React, and TypeScript — covering product
+          UIs, dashboards, and developer tools.
+        </p>
+        <h3 id="blockchain-projects">Blockchain Projects</h3>
+        <p>
+          Smart contracts, on-chain protocols, and Web3 tooling using Solidity, Rust, and Move
+          across Ethereum and EVM-compatible chains.
+        </p>
+        <h2 id="library">Your Library</h2>
+        <p>
+          Curated collection of projects, repositories, and experiments — the full library view of
+          everything Agnij has built.
+        </p>
+        <h2 id="achievements">Achievements</h2>
+        <p>
+          Hackathon wins, certifications, and notable open-source contributions. View the full
+          <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank"> GitHub profile</a> for additional context.
+        </p>
+        <h2 id="contact">Contact</h2>
+        <p>
+          Reach Agnij Dutta via email at <a href="mailto:agnijdutta413@gmail.com">agnijdutta413@gmail.com</a>,
+          on <a href="https://linkedin.com/in/agnij-dutta" rel="noopener noreferrer" target="_blank">LinkedIn</a>,
+          <a href="https://x.com/0xholmesdev" rel="noopener noreferrer" target="_blank"> X/Twitter</a>, or
+          <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank"> GitHub</a>.
         </p>
         <nav aria-label="Portfolio sections">
           <ul>
