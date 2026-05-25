@@ -1,4 +1,4 @@
-# llms.txt for agnij.dev
+# llms.txt for agnij.me
 
 # About
 Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. Currently studying Data Science at IIT Madras. Building human-centered software at Workwise and HackQuest.
@@ -25,6 +25,6 @@ Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, Indi
 - Bachelor's Data Science and AI Applications at IIT Madras
 
 # Website
-https://agnij.dev
+https://agnij.me
 
 

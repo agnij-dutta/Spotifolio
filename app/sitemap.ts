@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next"
 import { SECTION_TO_SLUG } from "@/lib/sections"
 
-const siteUrl = "https://agnij.dev"
+const siteUrl = "https://agnij.me"
 
 const lastModified = new Date()
 
