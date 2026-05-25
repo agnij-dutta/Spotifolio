@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 
-const siteUrl = 'https://agnij.dev'
+const siteUrl = 'https://agnij.me'
 
 export default function manifest(): MetadataRoute.Manifest {
   return {

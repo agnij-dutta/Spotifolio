@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next"
 import "./globals.css"
 
-const siteUrl = "https://agnij.dev"
+const siteUrl = "https://agnij.me"
 
 export const viewport: Viewport = {
   width: "device-width",
