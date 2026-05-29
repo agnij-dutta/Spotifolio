@@ -7,6 +7,9 @@ import { PlayerControls } from "../components/PlayerControls"
 import { RightSidebar } from "../components/RightSidebar"
 import { TopBar } from "../components/TopBar"
 import { PortalTour } from "../components/PortalTour"
+import { MobileGate } from "../components/MobileGate"
+import { SeoContent } from "../components/SeoContent"
+import { useDevice, useMediaQuery } from "../hooks/use-device"
 import { useSearchParams } from "next/navigation"
 import type { CategorizedProject } from "@/lib/github"
 import { SECTION_TO_SLUG, SLUG_TO_SECTION } from "@/lib/sections"
@@ -49,6 +52,12 @@ export default function Home() {
   const [leftSidebarWidth, setLeftSidebarWidth] = useState(240)
   const [rightSidebarWidth, setRightSidebarWidth] = useState(384)
   const [selectedProject, setSelectedProject] = useState<CategorizedProject | null>(null)
+
+  // Device gating: phones get a dedicated landing screen; iPads/desktops get the full app.
+  const { ready: deviceReady, isPhone } = useDevice()
+  // Tablet range (phones are gated out separately). Below `lg` we shrink the side panels
+  // so the main content never gets crushed on an iPad-sized screen.
+  const isTablet = useMediaQuery("(max-width: 1023px)")
 
   // Automatically open/close right sidebar based on active section
   // Don't auto-close if a project is selected (user clicked a project)
@@ -126,102 +135,38 @@ export default function Home() {
     if (project) setIsRightSidebarOpen(true)
   }
 
+  // Avoid a flash of the desktop layout before we know the device type.
+  if (!deviceReady) {
+    return <div className="h-screen w-full bg-black" />
+  }
+
+  // Phones: render the focused landing screen instead of the full tool.
+  if (isPhone) {
+    return <MobileGate />
+  }
+
+  // On tablet, clamp the (wider) right panel so the main content keeps usable room
+  // when a section's detail sidebar is open. The left nav keeps its normal width.
+  const effectiveLeftWidth = leftSidebarWidth
+  const effectiveRightWidth = isTablet ? Math.min(rightSidebarWidth, 320) : rightSidebarWidth
+
   return (
     <div className="flex flex-col h-screen bg-black">
-      <section className="sr-only" aria-label="Portfolio introduction">
-        <h1>
-          Agnij Dutta | Full-stack Developer & Blockchain Engineer
-        </h1>
-        <p>
-          Agnij Dutta is a full-stack developer and blockchain engineer from Kolkata, India. 
-          Currently pursuing a Bachelor's degree in Data Science and AI Applications at the 
-          <a href="https://www.iitm.ac.in" rel="noopener noreferrer" target="_blank"> Indian Institute of Technology Madras</a> (IIT Madras). Building human-centered software 
-          solutions at <a href="https://workwise.io" rel="noopener noreferrer" target="_blank">Workwise</a> as an SDE Intern and contributing to community growth at 
-          <a href="https://hackquest.io" rel="noopener noreferrer" target="_blank"> HackQuest</a> as a Developer Advocate. Specializes in <a href="https://react.dev" rel="noopener noreferrer" target="_blank">React</a>, <a href="https://nextjs.org" rel="noopener noreferrer" target="_blank">Next.js</a>, <a href="https://www.typescriptlang.org" rel="noopener noreferrer" target="_blank">TypeScript</a>, 
-          blockchain protocols, smart contracts, machine learning, and data science. Connect on <a href="https://linkedin.com/in/agnij-dutta" rel="noopener noreferrer" target="_blank">LinkedIn</a> or <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>.
-        </p>
-        <h2 id="work-experience">Professional Experience</h2>
-        <ul>
-          <li><a href="https://workwise.io" rel="noopener noreferrer" target="_blank">SDE Intern at Workwise</a> - Built features to boost admin productivity by 85%</li>
-          <li><a href="https://hackquest.io" rel="noopener noreferrer" target="_blank">Developer Advocate at HackQuest</a> - Community growth and maintenance</li>
-          <li>Data Science Intern at Project Control & Systems - Increased customer retention by 20%</li>
-        </ul>
-        <h2 id="education">Education</h2>
-        <p>
-          Bachelor's in Data Science and AI Applications at <a href="https://www.iitm.ac.in" rel="noopener noreferrer" target="_blank">Indian Institute of Technology Madras</a>. Major in <a href="https://www.iitm.ac.in/ds" rel="noopener noreferrer" target="_blank">Data Science</a>, Minor in <a href="https://www.iitm.ac.in/ml" rel="noopener noreferrer" target="_blank">Machine Learning</a>.
-        </p>
-        <h2 id="skills">Technical Skills</h2>
-        <ul>
-          <li>Frontend: <a href="https://react.dev" rel="noopener noreferrer" target="_blank">React</a>, <a href="https://nextjs.org" rel="noopener noreferrer" target="_blank">Next.js</a>, <a href="https://www.typescriptlang.org" rel="noopener noreferrer" target="_blank">TypeScript</a>, JavaScript, HTML, CSS, Tailwind CSS</li>
-          <li>Backend: <a href="https://nodejs.org" rel="noopener noreferrer" target="_blank">Node.js</a>, Express, REST APIs, GraphQL</li>
-          <li>Blockchain: <a href="https://soliditylang.org" rel="noopener noreferrer" target="_blank">Solidity</a>, Smart Contracts, <a href="https://web3js.org" rel="noopener noreferrer" target="_blank">Web3</a>, <a href="https://ethereum.org" rel="noopener noreferrer" target="_blank">Ethereum</a>, Rust, Move</li>
-          <li>Data Science & ML: <a href="https://www.python.org" rel="noopener noreferrer" target="_blank">Python</a>, <a href="https://www.tensorflow.org" rel="noopener noreferrer" target="_blank">TensorFlow</a>, <a href="https://pytorch.org" rel="noopener noreferrer" target="_blank">PyTorch</a>, OpenCV, R, Data Analysis</li>
-          <li>Tools: <a href="https://git-scm.com" rel="noopener noreferrer" target="_blank">Git</a>, <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>, <a href="https://www.docker.com" rel="noopener noreferrer" target="_blank">Docker</a>, Linux, VS Code</li>
-        </ul>
-        <h2>Projects</h2>
-        <p>
-          Explore <a href="#ai-projects">AI projects</a>, <a href="#web-projects">web applications</a>, and <a href="#blockchain-projects">blockchain solutions</a>. Portfolio includes
-          machine learning models, full-stack web applications, and decentralized applications
-          built with modern technologies. View projects on <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank">GitHub</a>.
-        </p>
-        <h3 id="ai-projects">AI &amp; Machine Learning Projects</h3>
-        <p>
-          Machine learning, computer vision, and applied AI work — including model experimentation,
-          inference pipelines, and data-driven products. See latest AI repositories on <a href="https://github.com/agnij-dutta?tab=repositories" rel="noopener noreferrer" target="_blank">GitHub</a>.
-        </p>
-        <h3 id="web-projects">Web Projects</h3>
-        <p>
-          Full-stack web applications built with Next.js, React, and TypeScript — covering product
-          UIs, dashboards, and developer tools.
-        </p>
-        <h3 id="blockchain-projects">Blockchain Projects</h3>
-        <p>
-          Smart contracts, on-chain protocols, and Web3 tooling using Solidity, Rust, and Move
-          across Ethereum and EVM-compatible chains.
-        </p>
-        <h2 id="library">Your Library</h2>
-        <p>
-          Curated collection of projects, repositories, and experiments — the full library view of
-          everything Agnij has built.
-        </p>
-        <h2 id="achievements">Achievements</h2>
-        <p>
-          Hackathon wins, certifications, and notable open-source contributions. View the full
-          <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank"> GitHub profile</a> for additional context.
-        </p>
-        <h2 id="contact">Contact</h2>
-        <p>
-          Reach Agnij Dutta via email at <a href="mailto:agnijdutta413@gmail.com">agnijdutta413@gmail.com</a>,
-          on <a href="https://linkedin.com/in/agnij-dutta" rel="noopener noreferrer" target="_blank">LinkedIn</a>,
-          <a href="https://x.com/0xholmesdev" rel="noopener noreferrer" target="_blank"> X/Twitter</a>, or
-          <a href="https://github.com/agnij-dutta" rel="noopener noreferrer" target="_blank"> GitHub</a>.
-        </p>
-        <nav aria-label="Portfolio sections">
-          <ul>
-            <li><a href="#education">Education</a></li>
-            <li><a href="#work-experience">Work Experience</a></li>
-            <li><a href="#ai-projects">AI Projects</a></li>
-            <li><a href="#web-projects">Web Projects</a></li>
-            <li><a href="#blockchain-projects">Blockchain Projects</a></li>
-            <li><a href="#skills">Skills & Tools</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </section>
+      <SeoContent />
       <Suspense fallback={null}>
         <SpotifyTokenHandler />
       </Suspense>
       <TopBar onBack={goBack} onForward={goForward} canGoBack={historyIndex > 0} canGoForward={historyIndex < history.length - 1} setActiveSection={setActiveSection} />
       <div className="flex flex-1 overflow-hidden relative gap-2 px-2">
-        <Sidebar 
-          activeSection={activeSection} 
-          setActiveSection={setActiveSection} 
-          width={leftSidebarWidth}
+        <Sidebar
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          width={effectiveLeftWidth}
           setWidth={setLeftSidebarWidth}
         />
         <div
           className="flex-1 min-w-0 flex flex-col transition-all duration-300"
-          style={{ marginRight: isRightSidebarOpen ? rightSidebarWidth + 8 : 0 }}
+          style={{ marginRight: isRightSidebarOpen ? effectiveRightWidth + 8 : 0 }}
         >
           <MainContent activeSection={activeSection} setActiveSection={setActiveSection} onOpenRightSidebar={openRightSidebar} onSelectProject={handleSelectProject} />
         </div>
@@ -229,7 +174,7 @@ export default function Home() {
           isOpen={isRightSidebarOpen}
           onClose={() => { setIsRightSidebarOpen(false); setSelectedProject(null) }}
           setActiveSection={setActiveSection}
-          width={rightSidebarWidth}
+          width={effectiveRightWidth}
           setWidth={setRightSidebarWidth}
           selectedProject={selectedProject}
           onClearProject={() => setSelectedProject(null)}
