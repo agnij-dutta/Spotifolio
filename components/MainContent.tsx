@@ -656,7 +656,7 @@ function HomeShowcase({ setActiveSection, onSelectProject, githubProjects: ghPro
         </div>
 
         {/* Quick-play compact grid */}
-        <div data-tour="quick-play" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        <div data-tour="quick-play" className="grid grid-cols-2 lg:grid-cols-3 gap-2">
           {quickPlayItems.map((item) => (
             <button
               key={item.title}

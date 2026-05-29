@@ -7,9 +7,9 @@ import { PlayerControls } from "../components/PlayerControls"
 import { RightSidebar } from "../components/RightSidebar"
 import { TopBar } from "../components/TopBar"
 import { PortalTour } from "../components/PortalTour"
-import { MobileGate } from "../components/MobileGate"
+import { MobileApp } from "../components/mobile/MobileApp"
 import { SeoContent } from "../components/SeoContent"
-import { useDevice, useMediaQuery } from "../hooks/use-device"
+import { useMediaQuery } from "../hooks/use-device"
 import { useSearchParams } from "next/navigation"
 import type { CategorizedProject } from "@/lib/github"
 import { SECTION_TO_SLUG, SLUG_TO_SECTION } from "@/lib/sections"
@@ -53,10 +53,15 @@ export default function Home() {
   const [rightSidebarWidth, setRightSidebarWidth] = useState(384)
   const [selectedProject, setSelectedProject] = useState<CategorizedProject | null>(null)
 
-  // Device gating: phones get a dedicated landing screen; iPads/desktops get the full app.
-  const { ready: deviceReady, isPhone } = useDevice()
-  // Tablet range (phones are gated out separately). Below `lg` we shrink the side panels
-  // so the main content never gets crushed on an iPad-sized screen.
+  // Layout switching. Phones (< md) get the Spotify-style mobile layout; md+ gets the
+  // full desktop layout. `mounted` avoids a hydration flash before we know the viewport.
+  const isMobile = useMediaQuery("(max-width: 767px)")
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  // Tablet range. Below `lg` we shrink the right panel so the main content never gets
+  // crushed on an iPad-sized screen.
   const isTablet = useMediaQuery("(max-width: 1023px)")
 
   // Automatically open/close right sidebar based on active section
@@ -135,14 +140,28 @@ export default function Home() {
     if (project) setIsRightSidebarOpen(true)
   }
 
-  // Avoid a flash of the desktop layout before we know the device type.
-  if (!deviceReady) {
+  // Avoid a flash of the desktop layout before we know the viewport.
+  if (!mounted) {
     return <div className="h-screen w-full bg-black" />
   }
 
-  // Phones: render the focused landing screen instead of the full tool.
-  if (isPhone) {
-    return <MobileGate />
+  // Phones: the real app, laid out like the Spotify mobile app (bottom tabs,
+  // now-playing bar, full-screen pages). Same shared state as the desktop layout.
+  if (isMobile) {
+    return (
+      <>
+        <SeoContent />
+        <Suspense fallback={null}>
+          <SpotifyTokenHandler />
+        </Suspense>
+        <MobileApp
+          activeSection={activeSection}
+          setActiveSection={setActiveSection}
+          selectedProject={selectedProject}
+          onSelectProject={handleSelectProject}
+        />
+      </>
+    )
   }
 
   // On tablet, clamp the (wider) right panel so the main content keeps usable room

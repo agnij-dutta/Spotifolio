@@ -83,7 +83,7 @@ export function RightSidebar({ isOpen, onClose, setActiveSection, width, setWidt
 }
 
 // ---- PROJECT DETAIL PANEL ----
-function ProjectDetailPanel({ project, onBack, setActiveSection }: {
+export function ProjectDetailPanel({ project, onBack, setActiveSection }: {
   project: CategorizedProject
   onBack?: () => void
   setActiveSection?: (section: string) => void
@@ -286,7 +286,7 @@ function ProjectDetailPanel({ project, onBack, setActiveSection }: {
 }
 
 // ---- ABOUT PANEL (default) ----
-const aboutData = {
+export const aboutData = {
   name: "Agnij Dutta",
   tagline: "Building meaningful things with code.",
   backgroundImage: "https://github.com/agnij-dutta/agnij-dutta/blob/main/background-mic.jpeg?raw=true",
@@ -305,7 +305,7 @@ const aboutData = {
   ]
 }
 
-function AboutPanel({ onAboutOpen, setActiveSection }: { onAboutOpen: () => void; setActiveSection?: (section: string) => void }) {
+export function AboutPanel({ onAboutOpen, setActiveSection }: { onAboutOpen: () => void; setActiveSection?: (section: string) => void }) {
   const goToEducation = () => setActiveSection?.("Education")
   const goToWorkExperience = () => setActiveSection?.("Work Experience")
 
@@ -394,7 +394,7 @@ function AboutPanel({ onAboutOpen, setActiveSection }: { onAboutOpen: () => void
 }
 
 // ---- ABOUT MODAL ----
-function AboutModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export function AboutModal({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogOverlay className="bg-black/40" />
