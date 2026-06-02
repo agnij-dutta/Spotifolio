@@ -14,16 +14,22 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: 'portrait-primary',
     icons: [
       {
-        src: '/profile.jpg',
+        src: '/icons/192',
         sizes: '192x192',
-        type: 'image/jpeg',
+        type: 'image/png',
         purpose: 'any',
       },
       {
-        src: '/profile.jpg',
+        src: '/icons/512',
         sizes: '512x512',
-        type: 'image/jpeg',
+        type: 'image/png',
         purpose: 'any',
+      },
+      {
+        src: '/icons/512',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
       },
     ],
     categories: ['portfolio', 'developer', 'technology'],

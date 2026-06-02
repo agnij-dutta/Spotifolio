@@ -140,9 +140,17 @@ export default function Home() {
     if (project) setIsRightSidebarOpen(true)
   }
 
-  // Avoid a flash of the desktop layout before we know the viewport.
+  // Avoid a flash of the desktop layout before we know the viewport. Still render the
+  // crawler-facing SeoContent here so it lands in the server-rendered HTML — this branch
+  // is what SSR returns, since `mounted` is always false on the server. Without it, the
+  // initial HTML body is empty and crawlers/scrapers that don't run JS see no content.
   if (!mounted) {
-    return <div className="h-screen w-full bg-black" />
+    return (
+      <>
+        <SeoContent />
+        <div className="h-screen w-full bg-black" />
+      </>
+    )
   }
 
   // Phones: the real app, laid out like the Spotify mobile app (bottom tabs,
