@@ -61,9 +61,6 @@ export const metadata: Metadata = {
   classification: "Portfolio Website",
   alternates: {
     canonical: siteUrl,
-    types: {
-      "application/rss+xml": `${siteUrl}/rss.xml`,
-    },
   },
   openGraph: {
     title: "Agnij Dutta | Full-stack Developer & Blockchain Engineer",
@@ -74,8 +71,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: `${siteUrl}/profile.jpg`,
-        width: 1200,
-        height: 630,
+        width: 1440,
+        height: 810,
         alt: "Agnij Dutta - Full-stack Developer and Blockchain Engineer",
       },
     ],
